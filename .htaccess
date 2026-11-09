@@ -1,0 +1,76 @@
+# Spordha Diagnostics Ltd. - Hosting Configuration
+# Place in Apache document root
+
+RewriteEngine On
+
+# ---------------------------------------------------------------------------
+# Force HTTPS on production.
+# STEP 1: In InfinityFree (or your host) enable "Free SSL" / Let's Encrypt for
+#         the domain and wait until the certificate is active.
+# STEP 2: Then uncomment the three lines below. They deliberately skip
+#         localhost / 127.0.0.1 so the local demo at :8080 keeps working.
+# ---------------------------------------------------------------------------
+# RewriteCond %{HTTPS} off
+# RewriteCond %{HTTP_HOST} !^localhost [NC]
+# RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Remove trailing slashes
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+# Block access to sensitive files/folders
+<FilesMatch "\.(db|sql|docx|md|bat|log)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block config and includes from direct web access
+<IfModule mod_rewrite.c>
+    RewriteRule ^config/ - [F,L]
+    RewriteRule ^database/ - [F,L]
+    RewriteRule ^includes/ - [F,L]
+</IfModule>
+
+# Default index
+DirectoryIndex index.php
+
+# PHP settings
+<IfModule mod_php.c>
+    php_value session.cookie_httponly 1
+    php_value session.use_strict_mode 1
+    php_value session.cookie_samesite "Strict"
+    php_value upload_max_filesize 10M
+    php_value post_max_size 12M
+    php_value display_errors 0
+    php_value log_errors 1
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    # HSTS is only emitted on real HTTPS responses (env=HTTPS), so it is safe
+    # to leave enabled even before SSL is switched on.
+    Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+</IfModule>
+
+# Enable Gzip Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>
+
+# Browser caching for static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
+
+# Custom error pages
+ErrorDocument 404 /index.php
+ErrorDocument 403 /index.php
