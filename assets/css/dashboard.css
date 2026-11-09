@@ -1,0 +1,457 @@
+/* ==========================================================================
+   Spordha Diagnostics Ltd. - Dashboard, SOC & Terminal Stylesheet
+   Monochromatic Professional Theme
+   ========================================================================== */
+
+/* Dashboard Layout */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 140px);
+}
+
+.dashboard-sidebar {
+  background-color: var(--color-gray-subtle);
+  border-right: 1px solid var(--color-gray-border);
+  padding: 1.75rem 1.25rem;
+}
+
+.sidebar-profile {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-gray-border);
+}
+
+.profile-avatar {
+  width: 52px;
+  height: 52px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.profile-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-black);
+  line-height: 1.2;
+}
+
+.profile-role {
+  font-size: 0.75rem;
+  color: var(--color-gray-mid);
+  margin-top: 0.2rem;
+}
+
+.sidebar-menu {
+  list-style: none;
+}
+
+.sidebar-menu-item {
+  margin-bottom: 0.35rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  color: var(--color-charcoal);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.sidebar-link .icon {
+  font-size: 1.1rem;
+}
+
+.dashboard-main {
+  padding: 2.25rem;
+  background-color: var(--color-white);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-gray-border);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-header h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.dashboard-header p {
+  color: var(--color-gray-mid);
+  font-size: 0.875rem;
+}
+
+/* Metric Stats Cards */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-card .label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-gray-mid);
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.metric-card .value {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--color-black);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.metric-card .subtext {
+  font-size: 0.75rem;
+  color: var(--color-gray-dark);
+}
+
+/* Simulated Security Terminal Window */
+.terminal-window {
+  background-color: #0c0d0e;
+  border: 1px solid #27272a;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  font-family: var(--font-mono);
+  margin: 1.5rem 0;
+}
+
+.terminal-header {
+  background-color: #18181b;
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #27272a;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #3f3f46;
+}
+
+.terminal-dot.red { background-color: #ef4444; }
+.terminal-dot.yellow { background-color: #f59e0b; }
+.terminal-dot.green { background-color: #10b981; }
+
+.terminal-title {
+  color: #a1a1aa;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.terminal-body {
+  padding: 1.25rem;
+  color: #f4f4f5;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  max-height: 480px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.terminal-prompt {
+  color: #a1a1aa;
+}
+
+.terminal-cmd {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.terminal-out-green {
+  color: #4ade80;
+}
+
+.terminal-out-red {
+  color: #f87171;
+}
+
+.terminal-out-yellow {
+  color: #fde047;
+}
+
+/* Certificate Status Gauges & Timeline */
+.expiry-status-box {
+  border: 1px solid var(--color-gray-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--color-gray-subtle);
+}
+
+.expiry-timeline-bar {
+  height: 8px;
+  background-color: var(--color-gray-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin: 0.75rem 0;
+}
+
+.expiry-timeline-progress {
+  height: 100%;
+  background-color: var(--color-black);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+/* Interactive Tamper Testing Lab */
+.tamper-lab-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.tamper-box {
+  border: 1px solid var(--color-gray-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  background-color: var(--color-white);
+}
+
+.tamper-box.genuine {
+  border-color: #86efac;
+  background-color: #f0fdf4;
+}
+
+.tamper-box.tampered {
+  border-color: #fca5a5;
+  background-color: #fef2f2;
+}
+
+.tamper-box h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.hash-display-box {
+  background-color: #0c0d0e;
+  color: #4ade80;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  word-break: break-all;
+  margin: 0.75rem 0;
+}
+
+.hash-display-box.tampered-hash {
+  color: #f87171;
+}
+
+/* Clinical Report Document View (Print / PDF style) */
+.clinical-report-sheet {
+  max-width: 850px;
+  margin: 0 auto;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 3rem;
+  color: #000000;
+  font-family: 'Times New Roman', Times, serif, var(--font-sans);
+}
+
+.report-header-sec {
+  border-bottom: 2px solid #000000;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.report-lab-brand h2 {
+  font-size: 1.85rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.report-lab-brand p {
+  font-size: 0.85rem;
+  color: #444444;
+  font-family: var(--font-sans);
+}
+
+.report-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 0;
+  border-bottom: 1px dotted #ccc;
+}
+
+.meta-row:last-child {
+  border-bottom: none;
+}
+
+.meta-label {
+  font-weight: 700;
+  color: #222;
+}
+
+.report-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  font-family: var(--font-sans);
+}
+
+.report-results-table th {
+  background-color: #f0f0f0;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.report-results-table td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 0.85rem;
+}
+
+.report-signature-block {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #000000;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--font-sans);
+}
+
+.digital-signature-seal {
+  border: 2px dashed #000000;
+  border-radius: 6px;
+  padding: 1rem;
+  background-color: #fafafa;
+  max-width: 480px;
+}
+
+.digital-signature-seal h5 {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.signature-cert-details {
+  font-size: 0.75rem;
+  color: #444;
+  line-height: 1.4;
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+
+/* Print Media Query */
+@media print {
+  body {
+    background-color: #fff !important;
+  }
+  .site-header, .site-footer, .security-top-banner, .btn, .no-print {
+    display: none !important;
+  }
+  .clinical-report-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--color-gray-border);
+  }
+  .metrics-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tamper-lab-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .metrics-row {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-main {
+    padding: 1.25rem;
+  }
+}
