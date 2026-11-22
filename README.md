@@ -5,10 +5,13 @@
 **Case Identity:** Spordha Diagnostics Ltd. (Central Laboratory in Dhaka & 3 Branches: Dhanmondi, Uttara, Mirpur)  
 **Developer:** Md Shabbir Mia (ID: 2022-2-60-150)  
 **Supervision:** Department of CSE, East West University  
-## 🌐 Live Website
-[![Visit Live Website](https://shields.io)](https://spordhadiagnosticsltd.site.je)
+markdown
+# Spordha Diagnostics Ltd. — Enterprise PKI & Secure Medical Web Portal
 
-> **Note:** Best viewed on **Microsoft Edge** or **Brave** browser.
+## 🌐 Live Website
+https://spordhadiagnosticsltd.site.je
+
+> **Note:**  Viewed on **Microsoft Edge** or **Brave** browser.Don't use Google.
 ---
 
 ## 📋 Table of Contents
