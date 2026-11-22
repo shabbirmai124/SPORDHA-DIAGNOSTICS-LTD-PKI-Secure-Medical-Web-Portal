@@ -11,7 +11,7 @@ markdown
 ## 🌐 Live Website
 https://spordhadiagnosticsltd.site.je
 
-> **Note:**  Viewed on **Microsoft Edge** or **Brave** browser.Don't use Google.
+> **Note:**  Viewed on **Microsoft Edge** or **Brave** browser.Don't use Google Browser.
 ---
 
 ## 📋 Table of Contents
