@@ -164,13 +164,35 @@ async function handleRequest(req, res) {
       'Referrer-Policy': 'strict-origin-when-cross-origin',
     };
 
+    const isHttps =
+      String(headers['x-forwarded-proto'] || '').split(',')[0].trim().toLowerCase() === 'https' ||
+      String(headers['origin'] || headers['referer'] || '').toLowerCase().startsWith('https://');
+
     for (const [key, values] of Object.entries(phpResponse.headers || {})) {
       const lowerKey = key.toLowerCase();
       if (lowerKey === 'transfer-encoding' || lowerKey === 'content-length') {
         continue;
       }
       if (lowerKey === 'set-cookie') {
-        outHeaders['Set-Cookie'] = values;
+        const rawList = Array.isArray(values) ? values : [values];
+        outHeaders['Set-Cookie'] = rawList.map((cookieStr) => {
+          let updated = String(cookieStr).replace(/;\s*SameSite=[^;]*/gi, '');
+          if (!/;\s*HttpOnly/i.test(updated)) {
+            updated += '; HttpOnly';
+          }
+          if (isHttps) {
+            if (!/;\s*Secure/i.test(updated)) {
+              updated += '; Secure';
+            }
+            updated += '; SameSite=None';
+            if (!/;\s*Partitioned/i.test(updated)) {
+              updated += '; Partitioned';
+            }
+          } else {
+            updated += '; SameSite=Lax';
+          }
+          return updated;
+        });
       } else {
         outHeaders[key] = Array.isArray(values) ? values.join(', ') : values;
       }

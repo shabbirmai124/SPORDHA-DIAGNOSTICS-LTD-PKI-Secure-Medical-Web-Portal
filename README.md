@@ -485,45 +485,15 @@ SPORDHA DIAGNOSTICS LTD Website/
 │   └── js/
 │       ├── main.js                     # Tab switching, modals, clipboard, AJAX CRL toggle
 │       └── verify.js                   # Web Crypto API real-time SHA-256 tamper calculation
-├── readme image/                       # 📸 DEDICATED SCREENSHOTS & ARCHITECTURAL BLUEPRINTS FOLDER
-│   ├── D1_target_architecture.png              (Figure 1 - Target Architecture Blueprint)
-│   ├── D2_two_tier_ca_hierarchy.png            (Figure 5 - Two-Tier CA Trust Chain)
-│   ├── D3_virtual_lab_topology.png             (Figure 2 - Virtual Lab Network Topology)
-│   ├── D4_mtls_branch_upload_flow.png          (Figure 6 - Mutual TLS Handshake Flow)
-│   ├── D5_clinical_report_signing_workflow.png (Figure 7 - PAdES Report Signing Workflow)
-│   ├── D6_ai_impersonation_attack_tree.png     (Figure 4 - AI Threat Attack Tree)
-│   ├── D7_trust_boundaries_stride.png          (Figure 3 - STRIDE Threat Boundaries)
-│   ├── 01_landing_hero.png                     (Public Landing Hero & Live Telemetry)
-│   ├── 02_landing_security_architecture.png    (Security Architecture Pillars)
-│   ├── 03_login_role_matrix.png                (Secure Authentication & 1-Click Role Switcher)
-│   ├── 04_pki_soc_ca_hierarchy.png             (PKI SOC CA Hierarchy Visualizer)
-│   ├── 05_pki_soc_certificate_inventory.png    (PKI SOC Certificate Inventory)
-│   ├── 06_pki_soc_expiry_warnings.png          (PKI SOC Expiry Risk Monitor)
-│   ├── 07_pki_soc_ai_threat_defense.png        (PKI SOC AI Impersonation Quorum)
-│   ├── 08_pki_soc_test_cases_matrix.png        (PKI SOC 16 Test Cases Matrix)
-│   ├── 09_branch_mtls_success.png              (Branch mTLS Valid Certificate HTTP 200)
-│   ├── 10_branch_mtls_rejected.png             (Branch mTLS Missing Certificate HTTP 400)
-│   ├── 11_verify_genuine_report.png            (Report Verifier: Verified OK)
-│   ├── 12_verify_tampered_report.png           (Report Verifier: Tamper Detected Alert)
-│   ├── 13_interactive_tamper_playground.png    (Interactive Real-Time Tamper Testing Lab)
-│   ├── 14_pathologist_signing_studio.png       (Pathologist RSA Digital Signing Studio)
-│   ├── 15_doctor_consultation_portal.png       (Referring Doctor Consultation Console)
-│   ├── 16_patient_health_portal.png            (Patient Health Records & Report Portal)
-│   ├── 17_admin_telemetry_dashboard.png        (Administrator Central Telemetry Dashboard)
-│   ├── 18_printable_pathology_report.png       (Printable Clinical Report with Digital Seal)
-│   ├── 19_evidence_gallery.png                 (Evidence Gallery E-01 through E-28)
-│   ├── 20_academic_documentation.png           (16-Section Academic Report Viewer)
-│   ├── 21_diagnostic_services.png              (Diagnostic Test Catalog & Protocols)
-│   ├── 22_branch_network_locations.png         (Branch Locations & mTLS IP Architecture)
-│   └── 23_about_and_compliance.png             (About Spordha & Statutory Compliance)
-├── assets1/                            # Course assets (diagrams and evidence part 1)
-├── assets2/                            # Course assets (evidence part 2 and terminal logs)
+├── assets1/                            # Architectural diagrams (D1–D7) and server proofs (E-01–E-14, E-31)
+├── assets2/                            # Terminal proofs and audit screenshots (E-15–E-30)
 ├── api/
 │   ├── verify_report.php               # JSON endpoint for programmatic report verification
 │   ├── revoke_cert.php                 # JSON endpoint for dynamic CRL revocation / reinstatement
 │   └── incident_action.php             # JSON endpoint for AI threat incident logging & quorum
 ├── index.php                           # Homepage, quick verification box, system metrics
 ├── login.php                           # Authentication portal with 1-click role switcher
+├── register.php                        # Patient account registration portal
 ├── logout.php                          # Secure session termination
 ├── dashboard.php                       # Role-aware central dashboard for all personas
 ├── patient_portal.php                  # Patient test history & certificate downloads
@@ -534,9 +504,14 @@ SPORDHA DIAGNOSTICS LTD Website/
 ├── verify.php                          # Public report verification & interactive tamper lab
 ├── services.php                        # Diagnostic test catalog, fees, and turnaround times
 ├── branches.php                        # Branch directory (Dhaka, Dhanmondi, Uttara, Mirpur)
+├── about.php                           # Corporate overview, lab governance, and statutory compliance
+├── contact.php                         # Laboratory contact directory and inquiry portal
 ├── documentation.php                   # Full 16-section academic project report viewer
-├── evidence_gallery.php                # Filterable gallery of 28 server terminal proofs (E-01–E-28)
-├── generate_report.php                 # Authentic printable pathology report with digital seal
+├── evidence_gallery.php                # Filterable gallery of 31 server terminal proofs (E-01–E-31)
+├── generate_report.php                 # Authentic printable pathology report with QR & digital seal
+├── server.js                           # Node.js PHP runtime HTTP server (port 3000)
+├── package.json                        # Project scripts and runtime manifest
+├── .htaccess                           # Apache security headers and URL rewrite rules
 └── start_server.bat                    # One-click Windows / XAMPP launcher
 ```
 

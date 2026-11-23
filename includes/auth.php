@@ -109,16 +109,35 @@ function logoutUser() {
     session_destroy();
 }
 
+function getCsrfSecretKey(): string {
+    return hash('sha256', __FILE__ . '|SpordhaDiagnosticsPKI2026_CSRF_HMAC');
+}
+
 function getCsrfToken(): string {
     if (empty($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        $nonce = bin2hex(random_bytes(16));
+        $exp = (string)(time() + 7200);
+        $sig = hash_hmac('sha256', $nonce . '.' . $exp, getCsrfSecretKey());
+        $_SESSION['csrf_token'] = $nonce . '.' . $exp . '.' . $sig;
     }
     return $_SESSION['csrf_token'];
 }
 
 function verifyCsrfToken(?string $token): bool {
-    if (empty($_SESSION['csrf_token']) || empty($token)) {
+    if (empty($token)) {
         return false;
     }
-    return hash_equals($_SESSION['csrf_token'], $token);
+    if (!empty($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token)) {
+        return true;
+    }
+    $parts = explode('.', $token);
+    if (count($parts) !== 3) {
+        return false;
+    }
+    [$nonce, $exp, $sig] = $parts;
+    if (!ctype_xdigit($nonce) || !ctype_digit($exp) || (int)$exp < time()) {
+        return false;
+    }
+    $expected = hash_hmac('sha256', $nonce . '.' . $exp, getCsrfSecretKey());
+    return hash_equals($expected, $sig);
 }
