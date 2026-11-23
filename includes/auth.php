@@ -1,5 +1,5 @@
-<!-- Md Shabbir Mia -->
 <?php
+// Md Shabbir Mia
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

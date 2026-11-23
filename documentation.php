@@ -1,5 +1,5 @@
-<!-- Md Shabbir Mia -->
 <?php
+// Md Shabbir Mia
 
 function docTable(array $headers, array $rows): string {
     $html = '<div class="table-responsive"><table class="data-table"><thead><tr>';

@@ -1,5 +1,5 @@
-<!-- Md Shabbir Mia -->
 <?php
+// Md Shabbir Mia
 
 require_once __DIR__ . '/../config/database.php';
 

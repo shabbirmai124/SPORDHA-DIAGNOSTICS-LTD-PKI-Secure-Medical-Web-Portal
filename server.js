@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { loadNodeRuntime, createNodeFsMountHandler } from '@php-wasm/node';
-import { PHP, PHPRequestHandler } from '@php-wasm/universal';
+import { PHP, PHPRequestHandler, setPhpIniEntries } from '@php-wasm/universal';
 
 const PORT = Number(process.env.PORT || 3000);
 const HOST = '0.0.0.0';
@@ -51,9 +51,11 @@ async function createPhpInstance() {
     php.mkdir('/tmp/sessions');
   }
   php.mount('/tmp/sessions', createNodeFsMountHandler(SESSION_DIR));
-  await php.setPhpIniEntry('session.save_path', '/tmp/sessions');
-  await php.setPhpIniEntry('display_errors', '0');
-  await php.setPhpIniEntry('date.timezone', 'Asia/Dhaka');
+  await setPhpIniEntries(php, {
+    'session.save_path': '/tmp/sessions',
+    display_errors: '0',
+    'date.timezone': 'Asia/Dhaka',
+  });
   return php;
 }
 

@@ -1,5 +1,5 @@
-<!-- Md Shabbir Mia -->
 <?php
+// Md Shabbir Mia
 
 define('DB_DRIVER', 'sqlite'); 
 

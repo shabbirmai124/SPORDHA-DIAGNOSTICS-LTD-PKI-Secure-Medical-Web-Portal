@@ -1,5 +1,5 @@
-<!-- Md Shabbir Mia -->
 <?php
+// Md Shabbir Mia
 
 $pageTitle = "About Spordha Diagnostics Ltd.";
 require_once __DIR__ . '/includes/header.php';
