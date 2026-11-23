@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Shared Header
- * Monochromatic Professional Theme
- */
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -25,12 +22,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <link rel="icon" type="image/svg+xml" href="assets1/favicon.svg">
   <meta name="theme-color" content="#09090b">
 
-  <!-- Modern Clean Fonts -->
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- CSS Stylesheets -->
+  
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/dashboard.css">
   
@@ -38,7 +35,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 </head>
 <body>
 
-  <!-- Top Security Infrastructure Telemetry Bar -->
+  
   <aside class="security-top-banner">
     <div class="container">
       <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -54,7 +51,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </div>
   </aside>
 
-  <!-- Main Sticky Navigation Bar -->
+  
   <header class="site-header">
     <div class="container">
       <nav class="navbar">
@@ -66,7 +63,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </div>
         </a>
 
-        <!-- Desktop Navigation Links -->
+        
         <ul class="nav-links">
           <li><a href="index.php" class="nav-link <?php echo $currentPage === 'index.php' ? 'active' : ''; ?>">Home</a></li>
           <li><a href="about.php" class="nav-link <?php echo $currentPage === 'about.php' ? 'active' : ''; ?>">About</a></li>
@@ -79,7 +76,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           <li><a href="contact.php" class="nav-link <?php echo $currentPage === 'contact.php' ? 'active' : ''; ?>">Contact</a></li>
         </ul>
 
-        <!-- Right Action Buttons / User Menu -->
+        
         <div class="nav-actions">
           <?php if ($user): ?>
             <div style="display: flex; align-items: center; gap: 0.5rem;">

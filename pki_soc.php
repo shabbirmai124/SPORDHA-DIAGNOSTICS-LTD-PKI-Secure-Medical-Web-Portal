@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - PKI & Security Operations Center (SOC)
- * Manages Two-Tier CA, Certificate Inventory, CRL Revocation, Expiry Warnings & AI Threats
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
@@ -10,13 +7,10 @@ require_once __DIR__ . '/includes/functions.php';
 
 $db = getDBConnection();
 
-// Fetch certificates
 $certs = $db->query("SELECT * FROM certificates ORDER BY id ASC")->fetchAll();
 
-// Fetch incidents
 $incidents = $db->query("SELECT * FROM incident_logs ORDER BY id DESC")->fetchAll();
 
-// Fetch test cases
 $testCases = $db->query("SELECT * FROM test_cases ORDER BY id ASC")->fetchAll();
 
 $pageTitle = "PKI Security Operations Center (SOC)";
@@ -37,7 +31,7 @@ require_once __DIR__ . '/includes/header.php';
       </div>
       <div>
         <a href="evidence_gallery.php" class="btn btn-secondary btn-sm" style="background: #fff; color: #000;">
-          Inspect Screenshot Evidence (E-01 – E-28) →
+          Inspect Screenshot Evidence (E-01 – E-31) →
         </a>
       </div>
     </div>
@@ -46,7 +40,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
 
-  <!-- PKI Telemetry Metrics -->
+  
   <div class="metrics-row">
     <div class="metric-card">
       <div class="label">Offline Root CA</div>
@@ -70,7 +64,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <!-- SOC Tabbed Navigation -->
+  
   <div class="tab-container" style="margin-top: 2rem;">
     <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--color-gray-border); margin-bottom: 2rem; flex-wrap: wrap;">
       <button class="btn btn-secondary tab-btn active" data-tab="tab-ca-tree" style="border-bottom: none; border-radius: 6px 6px 0 0;">
@@ -90,7 +84,7 @@ require_once __DIR__ . '/includes/header.php';
       </button>
     </div>
 
-    <!-- TAB 1: CA HIERARCHY -->
+    
     <div class="tab-pane active" id="tab-ca-tree">
       <div class="cards-grid-2">
         <div>
@@ -116,7 +110,7 @@ require_once __DIR__ . '/includes/header.php';
       </div>
     </div>
 
-    <!-- TAB 2: CERTIFICATE INVENTORY -->
+    
     <div class="tab-pane" id="tab-inventory">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
         <h3 style="font-size: 1.25rem; font-weight: 800;">Laboratory Certificate Directory & Revocation Controls</h3>
@@ -175,7 +169,7 @@ require_once __DIR__ . '/includes/header.php';
       </div>
     </div>
 
-    <!-- TAB 3: EXPIRY WARNINGS (R7 / E-25) -->
+    
     <div class="tab-pane" id="tab-expiry">
       <div class="cards-grid-2" style="margin-bottom: 2rem;">
         <div>
@@ -186,7 +180,7 @@ require_once __DIR__ . '/includes/header.php';
             In 2025, Spordha experienced a 24-hour portal outage when its certificate expired unmonitored. Under our corrected design, automated alerts trigger at <strong>30-day (Notice)</strong>, <strong>14-day (Warning)</strong>, and <strong>7-day (Critical Outage Risk)</strong> intervals.
           </p>
 
-          <!-- Timeline Gauge -->
+          
           <?php foreach ($certs as $c): 
             $st = getCertExpiryStatus($c['valid_to'], $c['status']);
           ?>
@@ -206,7 +200,7 @@ require_once __DIR__ . '/includes/header.php';
           <?php endforeach; ?>
         </div>
 
-        <!-- Terminal Window Mimicking E-25 -->
+        
         <div>
           <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.75rem;">
             Server Expiry Status Daemon (Evidence E-25)
@@ -231,7 +225,7 @@ Alert recipients: it-admin@spordha.test, it-officer2@spordha.test
       </div>
     </div>
 
-    <!-- TAB 4: AI THREAT & INCIDENT LOG (E-28) -->
+    
     <div class="tab-pane" id="tab-ai-threat">
       <div class="cards-grid-2" style="margin-bottom: 2rem;">
         <div>
@@ -254,7 +248,7 @@ Alert recipients: it-admin@spordha.test, it-officer2@spordha.test
         </div>
       </div>
 
-      <!-- Real Incident Logs from Evidence E-28 -->
+      
       <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem;">
         Spordha Diagnostics Incident Log (Evidence E-15, E-16, E-28)
       </h3>
@@ -290,7 +284,7 @@ Alert recipients: it-admin@spordha.test, it-officer2@spordha.test
       <?php endforeach; ?>
     </div>
 
-    <!-- TAB 5: 16 TEST CASES MATRIX -->
+    
     <div class="tab-pane" id="tab-test-matrix">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
         <div>

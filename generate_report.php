@@ -1,9 +1,7 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Printable Clinical Report Certificate
- * Authentic Medical Report View with Cryptographic Signature Seal
- */
 
+header('Content-Type: text/html; charset=UTF-8');
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/functions.php';
@@ -49,7 +47,6 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
 </head>
 <body>
 
-  <!-- Top Action Bar (Hidden on print) -->
   <div class="no-print-bar">
     <a href="verify.php?uid=<?php echo urlencode($report['report_uid']); ?>" class="btn btn-secondary btn-sm">
       ← Back to Verification Portal
@@ -61,10 +58,8 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
     </div>
   </div>
 
-  <!-- Clinical Report Sheet -->
   <div class="clinical-report-sheet">
     
-    <!-- Tamper Alert Banner (if modified) -->
     <?php if ($report['is_tampered']): ?>
       <div style="background-color: #fef2f2; border: 2px solid #ef4444; color: #991b1b; padding: 1.25rem; border-radius: 6px; margin-bottom: 2rem; font-family: var(--font-sans); text-align: center;">
         <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">
@@ -76,7 +71,6 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
       </div>
     <?php endif; ?>
 
-    <!-- Header Section -->
     <div class="report-header-sec">
       <div class="report-lab-brand">
         <h2>Spordha Diagnostics Ltd.</h2>
@@ -93,7 +87,6 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
       </div>
     </div>
 
-    <!-- Patient Metadata Grid -->
     <div class="report-meta-grid">
       <div>
         <div class="meta-row">
@@ -134,7 +127,6 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
       </div>
     </div>
 
-    <!-- Test Title Banner -->
     <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 0.5rem; margin-bottom: 1.5rem; font-family: var(--font-sans);">
       <h3 style="font-size: 1.35rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px;">
         DEPARTMENT OF <?php echo strtoupper(htmlspecialchars($report['test_category'])); ?>
@@ -144,7 +136,6 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
       </h4>
     </div>
 
-    <!-- Clinical Parameters Table -->
     <table class="report-results-table">
       <thead>
         <tr>
@@ -178,7 +169,6 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
       </tbody>
     </table>
 
-    <!-- Diagnostic Impression Box -->
     <div style="border: 1px solid #000; padding: 1rem 1.25rem; margin-bottom: 2rem; font-family: var(--font-sans);">
       <h5 style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.35rem;">
         Diagnostic Impression & Clinical Comments:
@@ -191,9 +181,7 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
       </p>
     </div>
 
-    <!-- Pathologist Signature & PKI Seal Block -->
     <div class="report-signature-block">
-      <!-- Left: Pathologist Details -->
       <div>
         <div style="font-size: 1rem; font-weight: 800;">
           <?php echo htmlspecialchars($report['pathologist_name'] ?: 'Dr. Nazmul Huda'); ?>
@@ -206,7 +194,6 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
         </div>
       </div>
 
-      <!-- Right: PAdES Digital Seal -->
       <div class="digital-signature-seal">
         <h5>
           <span>🛡️</span> DIGITAL SIGNATURE VERIFICATION SEAL
@@ -221,9 +208,69 @@ $pageTitle = "Report " . htmlspecialchars($report['report_uid']);
       </div>
     </div>
 
-    <!-- Document Legal Notice -->
     <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px dotted #ccc; font-family: var(--font-sans); font-size: 0.7rem; color: #777; text-align: center;">
       This medical document is protected under the Cyber Security Act 2026 (Act 81) and ICT Act 2006. Any unauthorized reproduction, modification, or presentation of tampered health records is a punishable cyber offence.
+    </div>
+
+    <?php
+      $verifyUrl = 'https://portal.spordha.test/verify.php?uid=' . urlencode($report['report_uid']);
+      $sealHash  = shortHash($report['signature_hash'], 32);
+    ?>
+    <div style="margin-top: 2rem; border: 2px solid #000; padding: 1.25rem; border-radius: 6px; font-family: var(--font-sans); display: flex; gap: 1.5rem; align-items: flex-start; background: #fafafa;">
+      <div style="flex-shrink: 0; border: 1px solid #000; padding: 0.5rem; background: #fff; font-family: 'Courier New', monospace; font-size: 0.45rem; line-height: 1.1; letter-spacing: 0.05em; text-align: center;">
+        <div style="font-size: 0.6rem; font-weight: 700; margin-bottom: 0.3rem; font-family: var(--font-sans);">SCAN TO VERIFY</div>
+        █▀▀▀▀▀█ ▀▄█ █▀▀▀▀▀█<br>
+        █ ███ █ ▀▄▄ █ ███ █<br>
+        █ ▀▀▀ █ █▄█ █ ▀▀▀ █<br>
+        ▀▀▀▀▀▀▀ █▄▀ ▀▀▀▀▀▀▀<br>
+        ▄▀█▀▄▀▀ ▄█▀ ▄▄▀▄▄▀▀<br>
+        ▄▄███▄▀ ▀▀▀ ▀▄█▀▄▀▄<br>
+        █▀▀▀▀▀█ ▄▀▄▄█▀▀▀▀▀▀<br>
+        █ ███ █ ▄▀▄▄█ ███ ▀▄<br>
+        █ ▀▀▀ █ ▄▀██ ▀▀▀ ▄▄<br>
+        ▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀▀▀<br>
+        <div style="font-size: 0.55rem; margin-top: 0.3rem; font-family: var(--font-sans); color: #666;"><?php echo htmlspecialchars($report['report_uid']); ?></div>
+      </div>
+      <div style="flex: 1;">
+        <div style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">
+          🔒 Cryptographic Verification Seal
+        </div>
+        <table style="font-size: 0.75rem; border-collapse: collapse; width: 100%;">
+          <tr>
+            <td style="padding: 0.15rem 0.5rem 0.15rem 0; color: #555; white-space: nowrap;">Report UID:</td>
+            <td style="font-family: 'Courier New', monospace; font-weight: 700;"><?php echo htmlspecialchars($report['report_uid']); ?></td>
+          </tr>
+          <tr>
+            <td style="padding: 0.15rem 0.5rem 0.15rem 0; color: #555;">Signature Digest:</td>
+            <td style="font-family: 'Courier New', monospace; word-break: break-all;"><?php echo $sealHash; ?></td>
+          </tr>
+          <tr>
+            <td style="padding: 0.15rem 0.5rem 0.15rem 0; color: #555;">Algorithm:</td>
+            <td>RSA-2048 / SHA-256 (RFC 5280 — PAdES)</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.15rem 0.5rem 0.15rem 0; color: #555;">Issuing CA:</td>
+            <td>Spordha Issuing CA v2 (Two-Tier PKI)</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.15rem 0.5rem 0.15rem 0; color: #555;">Verification URL:</td>
+            <td style="word-break: break-all;"><span style="font-family: 'Courier New', monospace;"><?php echo htmlspecialchars($verifyUrl); ?></span></td>
+          </tr>
+          <tr>
+            <td style="padding: 0.15rem 0.5rem 0.15rem 0; color: #555;">Seal Status:</td>
+            <td>
+              <?php if ($report['is_tampered']): ?>
+                <span style="color: #b91c1c; font-weight: 700;">⚠ SEAL BROKEN — DOCUMENT TAMPERED</span>
+              <?php else: ?>
+                <span style="color: #15803d; font-weight: 700;">✓ SEAL INTACT — CRYPTOGRAPHICALLY VALID</span>
+              <?php endif; ?>
+            </td>
+          </tr>
+        </table>
+        <div style="margin-top: 0.75rem; font-size: 0.65rem; color: #888;">
+          This seal is generated under the Spordha Two-Tier PKI (R8 — Non-Repudiation). To verify this document's authenticity, scan the QR code or visit the verification URL above. This report is admissible under ICT Act 2006 Section 54.
+        </div>
+      </div>
     </div>
 
   </div>

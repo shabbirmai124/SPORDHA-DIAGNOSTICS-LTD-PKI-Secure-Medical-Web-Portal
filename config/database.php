@@ -1,28 +1,16 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Database Configuration & Initialization
- * High-Security Diagnostic Laboratory PKI Portal
- * 
- * Supports both SQLite (zero-config, portable) and MySQL/MariaDB.
- */
 
-// Configuration options
-define('DB_DRIVER', 'sqlite'); // 'sqlite' or 'mysql'
+define('DB_DRIVER', 'sqlite'); 
 
-// MySQL configuration (if DB_DRIVER == 'mysql')
 define('DB_HOST', '127.0.0.1');
 define('DB_PORT', '3306');
 define('DB_NAME', 'spordha_diagnostics');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
-// SQLite configuration
 define('SQLITE_FILE', __DIR__ . '/../database/spordha.db');
 
-/**
- * Get PDO Database Connection
- * @return PDO
- */
 function getDBConnection() {
     static $pdo = null;
     if ($pdo !== null) {
@@ -46,7 +34,7 @@ function getDBConnection() {
                 initializeDatabase($pdo, 'sqlite');
             }
         } else {
-            // MySQL Connection
+            
             $dsn = 'mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8mb4';
             $pdo = new PDO($dsn, DB_USER, DB_PASS, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -56,7 +44,7 @@ function getDBConnection() {
         }
         return $pdo;
     } catch (PDOException $e) {
-        // If MySQL fails, fallback to SQLite automatically for fault-tolerance
+        
         if (DB_DRIVER !== 'sqlite') {
             try {
                 $isNew = !file_exists(SQLITE_FILE) || filesize(SQLITE_FILE) === 0;
@@ -75,13 +63,10 @@ function getDBConnection() {
     }
 }
 
-/**
- * Initialize Tables and Seed Initial Data
- */
 function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
-    // Table schemas
+    
     $queries = [
-        // Branches
+        
         "CREATE TABLE IF NOT EXISTS branches (
             id INTEGER PRIMARY KEY " . ($driver === 'sqlite' ? 'AUTOINCREMENT' : 'AUTO_INCREMENT') . ",
             name VARCHAR(100) NOT NULL,
@@ -94,13 +79,13 @@ function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
             last_sync DATETIME DEFAULT CURRENT_TIMESTAMP
         );",
 
-        // Users
+        
         "CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY " . ($driver === 'sqlite' ? 'AUTOINCREMENT' : 'AUTO_INCREMENT') . ",
             name VARCHAR(100) NOT NULL,
             email VARCHAR(120) NOT NULL UNIQUE,
             password_hash VARCHAR(255) NOT NULL,
-            role VARCHAR(30) NOT NULL, -- 'patient', 'doctor', 'pathologist', 'technician', 'branch_staff', 'pki_admin'
+            role VARCHAR(30) NOT NULL,
             phone VARCHAR(30),
             nid VARCHAR(30),
             branch_id INTEGER,
@@ -109,10 +94,10 @@ function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
             FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE SET NULL
         );",
 
-        // PKI Certificates
+        
         "CREATE TABLE IF NOT EXISTS certificates (
             id INTEGER PRIMARY KEY " . ($driver === 'sqlite' ? 'AUTOINCREMENT' : 'AUTO_INCREMENT') . ",
-            cert_type VARCHAR(40) NOT NULL, -- 'root_ca', 'issuing_ca', 'portal_tls', 'upload_tls', 'branch_client', 'doc_signing'
+            cert_type VARCHAR(40) NOT NULL,
             common_name VARCHAR(150) NOT NULL,
             san VARCHAR(200),
             serial_number VARCHAR(64) NOT NULL UNIQUE,
@@ -120,14 +105,14 @@ function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
             key_size INTEGER DEFAULT 2048,
             valid_from DATETIME NOT NULL,
             valid_to DATETIME NOT NULL,
-            status VARCHAR(20) DEFAULT 'VALID', -- 'VALID', 'REVOKED', 'EXPIRED'
+            status VARCHAR(20) DEFAULT 'VALID',
             revocation_date DATETIME,
             revocation_reason VARCHAR(255),
             fingerprint_sha256 VARCHAR(128) NOT NULL,
             cert_path VARCHAR(255)
         );",
 
-        // Medical Reports
+        
         "CREATE TABLE IF NOT EXISTS reports (
             id INTEGER PRIMARY KEY " . ($driver === 'sqlite' ? 'AUTOINCREMENT' : 'AUTO_INCREMENT') . ",
             report_uid VARCHAR(40) NOT NULL UNIQUE,
@@ -141,7 +126,7 @@ function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
             result_summary VARCHAR(100) NOT NULL,
             result_details TEXT NOT NULL,
             reference_range TEXT,
-            status VARCHAR(30) DEFAULT 'approved_signed', -- 'pending_sample', 'processing', 'pathologist_review', 'approved_signed', 'tampered'
+            status VARCHAR(30) DEFAULT 'approved_signed',
             is_tampered INTEGER DEFAULT 0,
             signature_hash VARCHAR(128) NOT NULL,
             raw_data_hash VARCHAR(128) NOT NULL,
@@ -153,7 +138,7 @@ function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
             FOREIGN KEY (branch_id) REFERENCES branches(id)
         );",
 
-        // Incident Logs & Dual Approval
+        
         "CREATE TABLE IF NOT EXISTS incident_logs (
             id INTEGER PRIMARY KEY " . ($driver === 'sqlite' ? 'AUTOINCREMENT' : 'AUTO_INCREMENT') . ",
             incident_code VARCHAR(40) NOT NULL UNIQUE,
@@ -167,7 +152,7 @@ function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         );",
 
-        // Branch Requisition Uploads
+        
         "CREATE TABLE IF NOT EXISTS sample_uploads (
             id INTEGER PRIMARY KEY " . ($driver === 'sqlite' ? 'AUTOINCREMENT' : 'AUTO_INCREMENT') . ",
             branch_id INTEGER NOT NULL,
@@ -176,13 +161,13 @@ function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
             test_type VARCHAR(120) NOT NULL,
             specimen_id VARCHAR(50) NOT NULL UNIQUE,
             client_cert_used VARCHAR(100) NOT NULL,
-            auth_status VARCHAR(30) NOT NULL, -- 'SUCCESS_MTLS', 'REJECTED_NO_CERT', 'REJECTED_REVOKED'
+            auth_status VARCHAR(30) NOT NULL,
             bytes_transferred INTEGER DEFAULT 0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (branch_id) REFERENCES branches(id)
         );",
 
-        // Test Cases Matrix (TC-01 through TC-16)
+        
         "CREATE TABLE IF NOT EXISTS test_cases (
             id INTEGER PRIMARY KEY " . ($driver === 'sqlite' ? 'AUTOINCREMENT' : 'AUTO_INCREMENT') . ",
             test_id VARCHAR(20) NOT NULL UNIQUE,
@@ -191,7 +176,7 @@ function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
             description TEXT NOT NULL,
             expected_result TEXT NOT NULL,
             observed_result TEXT NOT NULL,
-            status VARCHAR(20) NOT NULL, -- 'PASS', 'PARTIAL', 'INCONCLUSIVE', 'NOT RUN'
+            status VARCHAR(20) NOT NULL,
             evidence_id VARCHAR(40) NOT NULL
         );"
     ];
@@ -200,15 +185,12 @@ function initializeDatabase(PDO $pdo, string $driver = 'sqlite') {
         $pdo->exec($sql);
     }
 
-    // Seed Data
+    
     seedInitialData($pdo);
 }
 
-/**
- * Seed Comprehensive Initial Data from CSE487 Docx Files
- */
 function seedInitialData(PDO $pdo) {
-    // 1. Seed Branches
+    
     $branches = [
         ['Central Laboratory - Dhaka', 'HQ-DHAKA', '124 Bir Uttam C.R. Datta Road, Dhaka-1205', '+880 2 9876543', '7A:9B:4C:11:8F:D2:01', 'ACTIVE', '10.0.2.2'],
         ['Dhanmondi Sample Branch', 'BR-DHANMONDI', 'Road 27, House 45, Dhanmondi R/A, Dhaka', '+880 1711 001122', '3E:88:99:A1:77:C3:02', 'ACTIVE', '10.0.2.14'],
@@ -220,7 +202,7 @@ function seedInitialData(PDO $pdo) {
         $stmt->execute($b);
     }
 
-    // Default password hash for all demo accounts: 'Spordha@2026' or specific simple pass
+    
     $passPatient = password_hash('Patient@123', PASSWORD_BCRYPT);
     $passDoctor = password_hash('Doctor@123', PASSWORD_BCRYPT);
     $passPatho = password_hash('Patho@123', PASSWORD_BCRYPT);
@@ -229,29 +211,29 @@ function seedInitialData(PDO $pdo) {
     $passAdmin = password_hash('12345', PASSWORD_BCRYPT);
     $passFahim = password_hash('Fahim@123', PASSWORD_BCRYPT);
 
-    // 2. Seed Users
+    
     $users = [
-        // PKI Admins / IT Officers
+        
         ['Md Shabbir Mia', 'it-admin@spordha.test', $passAdmin, 'pki_admin', '+880 1700 000001', '19951234567890', 1, 'Senior PKI Administrator'],
         ['Abrar Tanvir', 'it-officer2@spordha.test', $passAdmin, 'pki_admin', '+880 1700 000002', '19961234567891', 1, 'Systems & Security Officer'],
 
-        // Pathologists
+        
         ['Dr. Nazmul Huda', 'pathologist@spordha.test', $passPatho, 'pathologist', '+880 1711 223344', '19801234567892', 1, 'Head of Clinical Pathology (MD)'],
         ['Dr. Farah Sharmin', 'pathologist2@spordha.test', $passPatho, 'pathologist', '+880 1711 223345', '19841234567893', 1, 'Consultant Hematologist (FCPS)'],
 
-        // Technicians
+        
         ['Sabbir Hasan', 'tech@spordha.test', $passTech, 'technician', '+880 1722 334455', '19981234567894', 1, 'Senior Medical Laboratory Technologist'],
         ['Nusrat Jahan', 'tech.mirpur@spordha.test', $passTech, 'technician', '+880 1722 334456', '19991234567895', 4, 'Lab Technologist - Mirpur'],
 
-        // Referring Doctors
+        
         ['Dr. Rezaul Karim', 'doctor.karim@spordha.test', $passDoctor, 'doctor', '+880 1733 445566', '19751234567896', 1, 'Associate Professor, Medicine (FCPS)'],
         ['Dr. Shamima Akhter', 'doctor.shamima@spordha.test', $passDoctor, 'doctor', '+880 1733 445567', '19821234567897', 2, 'Consultant Cardiologist (MD)'],
 
-        // Branch Staff
+        
         ['Rafiqul Islam', 'branch.dhanmondi@spordha.test', $passBranch, 'branch_staff', '+880 1744 556677', '19921234567898', 2, 'Branch In-Charge - Dhanmondi'],
         ['Tahmina Chowdhury', 'branch.uttara@spordha.test', $passBranch, 'branch_staff', '+880 1744 556678', '19931234567899', 3, 'Senior Reception Officer - Uttara'],
 
-        // Patients
+        
         ['Tanvir Ahmed', 'patient@spordha.test', $passPatient, 'patient', '+880 1755 667788', '19942619851234', 2, 'Corporate Employee (Patient ID: P-10024)'],
         ['Begum Rokeya', 'rokeya@spordha.test', $passPatient, 'patient', '+880 1755 667789', '19652619851235', 3, 'Outpatient (Patient ID: P-10025)'],
         ['Kazi Mahmudul Hasan', 'mahmud@spordha.test', $passPatient, 'patient', '+880 1755 667790', '19892619851236', 1, 'Corporate Health Check (Patient ID: P-10026)'],
@@ -262,7 +244,7 @@ function seedInitialData(PDO $pdo) {
         $stmt->execute($u);
     }
 
-    // 3. Seed Certificates (matching evidence E-05, E-06, E-07, E-13, E-17, E-22, etc.)
+    
     $certificates = [
         [
             'root_ca',
@@ -272,7 +254,7 @@ function seedInitialData(PDO $pdo) {
             'RSA-2048',
             2048,
             '2026-11-09 04:00:00',
-            '2036-11-06 04:00:00', // 10 years (3650 days from E-05)
+            '2036-11-06 04:00:00', 
             'VALID',
             null,
             null,
@@ -287,7 +269,7 @@ function seedInitialData(PDO $pdo) {
             'RSA-2048',
             2048,
             '2026-11-09 04:30:00',
-            '2031-11-08 04:30:00', // 5 years (1825 days from E-06)
+            '2031-11-08 04:30:00', 
             'VALID',
             null,
             null,
@@ -302,7 +284,7 @@ function seedInitialData(PDO $pdo) {
             'RSA-2048',
             2048,
             '2026-11-09 04:51:25',
-            '2027-11-09 04:51:25', // E-13 notAfter date!
+            '2027-11-09 04:51:25', 
             'VALID',
             null,
             null,
@@ -332,7 +314,7 @@ function seedInitialData(PDO $pdo) {
             'RSA-2048',
             2048,
             '2026-11-09 05:00:00',
-            '2027-02-07 05:00:00', // 90 days policy
+            '2027-02-07 05:00:00', 
             'VALID',
             null,
             null,
@@ -375,14 +357,14 @@ function seedInitialData(PDO $pdo) {
         $stmt->execute($c);
     }
 
-    // 4. Seed Medical Reports (including Dengue NS1 from E-14 and E-26)
+    
     $reports = [
         [
             'SPD-2026-90412',
-            11, // Tanvir Ahmed
-            7,  // Dr. Rezaul Karim
-            3,  // Dr. Nazmul Huda
-            2,  // Dhanmondi
+            11, 
+            7,  
+            3,  
+            2,  
             'Dengue NS1 Antigen & Platelet Count',
             'Serology & Hematology',
             'Blood (Serum & EDTA)',
@@ -402,10 +384,10 @@ function seedInitialData(PDO $pdo) {
         ],
         [
             'SPD-2026-90413',
-            12, // Begum Rokeya
-            8,  // Dr. Shamima Akhter
-            3,  // Dr. Nazmul Huda
-            3,  // Uttara
+            12, 
+            8,  
+            3,  
+            3,  
             'Comprehensive Lipid Profile & Fasting Blood Sugar',
             'Clinical Biochemistry',
             'Blood (Fluoride & Serum)',
@@ -426,10 +408,10 @@ function seedInitialData(PDO $pdo) {
         ],
         [
             'SPD-2026-90414',
-            13, // Kazi Mahmudul Hasan
-            7,  // Dr. Rezaul Karim
-            4,  // Dr. Farah Sharmin
-            1,  // HQ Dhaka
+            13, 
+            7,  
+            4,  
+            1,  
             'Complete Blood Count (CBC) with ESR',
             'Hematology',
             'Whole Blood (EDTA)',
@@ -449,8 +431,8 @@ function seedInitialData(PDO $pdo) {
             '2026-11-09 07:00:00'
         ],
         [
-            'SPD-2026-90499', // Tampered test example (matching E-27 modified by attacker)
-            11, // Tanvir Ahmed
+            'SPD-2026-90499', 
+            11, 
             7,
             3,
             2,
@@ -476,7 +458,7 @@ function seedInitialData(PDO $pdo) {
         $stmt->execute($r);
     }
 
-    // 5. Seed Security Incident Logs (matching E-15, E-16, E-28)
+    
     $incidents = [
         [
             'INC-AI-2026-01',
@@ -517,7 +499,7 @@ function seedInitialData(PDO $pdo) {
         $stmt->execute($inc);
     }
 
-    // 6. Seed Sample Uploads (Branch requisition queue)
+    
     $uploads = [
         [2, 'Tanvir Ahmed', '19942619851234', 'Dengue NS1 & Platelet', 'SPEC-DHN-8901', 'branch-dhanmondi.spordha.test', 'SUCCESS_MTLS', 14200, '2026-11-09 04:45:00'],
         [3, 'Begum Rokeya', '19652619851235', 'Lipid Profile & FBS', 'SPEC-UTT-4402', 'branch-uttara.spordha.test', 'SUCCESS_MTLS', 18950, '2026-11-09 05:10:00'],
@@ -529,7 +511,7 @@ function seedInitialData(PDO $pdo) {
         $stmt->execute($up);
     }
 
-    // 7. Seed Test Cases (TC-01 to TC-16 matching Section 10 table)
+    
     $testCases = [
         ['TC-01', 'R4/R5', 'Chain & Trust', 'Trusted server chain and portal hostname validation', 'Trusted chain and SAN accepted', 'OpenSSL chain OK; portal cert verified and SAN matched', 'PASS', 'E-07, E-17'],
         ['TC-02', 'R4', 'Chain & Trust', 'Certificate from untrusted CA presented by server', 'Client refuses connection with untrusted CA error', 'Connection refused by client certificate path validator', 'PASS', 'Lab Sandbox'],

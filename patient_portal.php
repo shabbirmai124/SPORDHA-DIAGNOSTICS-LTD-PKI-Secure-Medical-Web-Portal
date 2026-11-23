@@ -1,14 +1,10 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Patient Portal
- * Confidential Medical Records & Digitally Signed Test Results
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/functions.php';
 
-// If not logged in, prompt to log in or login as demo patient
 if (!isLoggedIn()) {
     header("Location: login.php?msg=" . urlencode("Please log in to access the Patient Portal."));
     exit;
@@ -17,7 +13,6 @@ if (!isLoggedIn()) {
 $user = currentUser();
 $db = getDBConnection();
 
-// Fetch reports for this patient (or all reports if admin/tech evaluating)
 if ($user['role'] === 'patient') {
     $stmt = $db->prepare("SELECT r.*, b.name as branch_name, doc.name as doctor_name, patho.name as pathologist_name 
         FROM reports r 
@@ -28,7 +23,7 @@ if ($user['role'] === 'patient') {
         ORDER BY r.id DESC");
     $stmt->execute([$user['id']]);
 } else {
-    // If doctor/admin visits, show demo patient (Tanvir Ahmed, id=11)
+    
     $stmt = $db->prepare("SELECT r.*, b.name as branch_name, doc.name as doctor_name, patho.name as pathologist_name 
         FROM reports r 
         LEFT JOIN branches b ON r.branch_id = b.id 
@@ -67,7 +62,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
   
-  <!-- Security Notice Card -->
+  
   <div style="background-color: var(--color-white); border: 1px solid var(--color-gray-border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
     <div style="display: flex; align-items: center; gap: 1rem;">
       <div style="width: 44px; height: 44px; background: #000; color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
@@ -131,7 +126,7 @@ require_once __DIR__ . '/includes/header.php';
           </div>
         </div>
 
-        <!-- Cryptographic Details Block -->
+        
         <div style="margin-bottom: 1.25rem;">
           <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-gray-mid); margin-bottom: 0.3rem;">
             DIGITAL SIGNATURE DIGEST (SHA-256):

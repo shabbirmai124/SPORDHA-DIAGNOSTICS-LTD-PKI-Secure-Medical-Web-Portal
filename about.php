@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - About Us Page
- * Organization, Lab Credentials, Academic Project Context
- */
 
 $pageTitle = "About Spordha Diagnostics Ltd.";
 require_once __DIR__ . '/includes/header.php';
@@ -22,7 +19,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
 
-  <!-- Mission, Vision, Values -->
+  
   <div class="cards-grid-3" style="margin-bottom: 3.5rem;">
     <div class="card-item" style="border-top: 4px solid #000;">
       <div class="card-icon">🎯</div>
@@ -41,7 +38,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <!-- Key Statistics -->
+  
   <div style="background-color: var(--color-black); color: #fff; padding: 3rem; border-radius: var(--radius-xl); margin-bottom: 3.5rem;">
     <h2 style="text-align: center; font-size: 1.75rem; font-weight: 800; margin-bottom: 2.5rem; color: #fff;">
       Spordha Diagnostics at a Glance
@@ -70,7 +67,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <!-- Lab Team / Departments -->
+  
   <div class="section-head">
     <span class="section-badge">Our Team</span>
     <h2 class="section-title">Clinical & Technical Leadership</h2>
@@ -98,7 +95,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <!-- Academic Context -->
+  
   <div style="background-color: var(--color-gray-subtle); border: 1px solid var(--color-gray-border); border-radius: var(--radius-xl); padding: 2.5rem;">
     <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem;">Academic Project Context</h2>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; font-size: 0.9rem; color: var(--color-charcoal); line-height: 1.7;">

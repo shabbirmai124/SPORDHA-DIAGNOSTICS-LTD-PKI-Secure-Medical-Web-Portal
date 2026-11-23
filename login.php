@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Secure Authentication Portal
- * High-Security Login with Role-Based Access Control
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
@@ -11,7 +8,6 @@ require_once __DIR__ . '/includes/functions.php';
 $error = '';
 $notice = $_GET['msg'] ?? '';
 
-// Handle One-Click Quick Role Sign-In if requested
 if (isset($_GET['quick_role'])) {
     $role = $_GET['quick_role'];
     $roleEmailMap = [
@@ -28,7 +24,7 @@ if (isset($_GET['quick_role'])) {
         'pathologist'  => 'Patho@123',
         'technician'   => 'Tech@123',
         'branch_staff' => 'Branch@123',
-        'pki_admin'    => 'Admin@123'
+        'pki_admin'    => '12345'
     ];
 
     if (isset($roleEmailMap[$role])) {
@@ -42,7 +38,6 @@ if (isset($_GET['quick_role'])) {
     }
 }
 
-// Handle Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $identifier = trim($_POST['identifier'] ?? '');
     $password   = $_POST['password'] ?? '';
@@ -119,7 +114,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       </form>
 
-      <!-- One-Click Instant Role Switcher -->
+      
       <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-gray-border);">
         <div style="font-size: 0.8rem; font-weight: 700; color: var(--color-black); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px;">
           Quick-Switch Demo Accounts (1-Click Login):
@@ -150,7 +145,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       </div>
 
-      <!-- Security Notice -->
+      
       <div style="margin-top: 1.5rem; font-size: 0.75rem; color: var(--color-gray-mid); text-align: center; line-height: 1.5;">
         Session cookies protected by <code>SameSite=Strict</code>, <code>HttpOnly</code>, and TLS 1.3 encryption.
       </div>

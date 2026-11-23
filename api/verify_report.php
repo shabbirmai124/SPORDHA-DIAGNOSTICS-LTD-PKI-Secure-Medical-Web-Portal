@@ -1,7 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Live Cryptographic Verification API
- */
 
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/database.php';

@@ -1,7 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Session Logout Handler
- */
 
 require_once __DIR__ . '/includes/auth.php';
 logoutUser();

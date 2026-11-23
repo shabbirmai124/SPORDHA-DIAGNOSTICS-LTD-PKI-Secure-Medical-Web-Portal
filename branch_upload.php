@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Branch Mutual TLS (mTLS) Upload Service
- * Implements Requirement R6 & Tests TC-05, TC-06, TC-07, TC-08, TC-09
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
@@ -12,7 +9,6 @@ $db = getDBConnection();
 $uploadStatus = null;
 $terminalLog = '';
 
-// Handle Requisition Upload Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $branchId   = (int)($_POST['branch_id'] ?? 3);
     $patientName= trim($_POST['patient_name'] ?? '');
@@ -20,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $testType   = trim($_POST['test_type'] ?? 'CBC & ESR');
     $certOption = $_POST['client_cert_mode'] ?? 'valid';
 
-    // Retrieve branch details
+    
     $bStmt = $db->prepare("SELECT * FROM branches WHERE id = ?");
     $bStmt->execute([$branchId]);
     $branch = $bStmt->fetch();
@@ -28,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $specimenId = 'SPEC-' . strtoupper(substr($branch['code'] ?? 'BR', 3, 3)) . '-' . rand(1000, 9999);
 
     if ($certOption === 'valid') {
-        // Successful mTLS handshake (Evidence image38.png -> HTTP 200)
+        
         $authStatus = 'SUCCESS_MTLS';
         $bytes = rand(12000, 25000);
         $clientCertUsed = 'branch-' . strtolower($branch['code']) . '.spordha.test';
@@ -52,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "[Nginx Access Log]: 10.0.2.15 - [09/Nov/2026:07:56:25] \"POST /api/upload HTTP/1.1\" 200 $bytes bytes - Client Cert: " . $clientCertUsed . " (OK)";
 
     } elseif ($certOption === 'missing') {
-        // Missing Client Certificate (Evidence E-20 -> HTTP 400 Bad Request)
+        
         $uploadStatus = [
             'success' => false,
             'code' => 400,
@@ -76,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "[Nginx Security Log]: Handshake aborted: client failed to present mandatory X.509 client certificate (Rule: R6, TC-06)";
 
     } elseif ($certOption === 'revoked') {
-        // Revoked Client Certificate (Evidence E-23 -> CRL Blacklist)
+        
         $uploadStatus = [
             'success' => false,
             'code' => 400,
@@ -101,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "[Nginx Security Log]: Certificate serial 99:AA:BB:CC:DD:EE:00:11 matches entry in /etc/nginx/ssl/issuing-ca.crl (Revoked token - Rule R7, TC-09)";
 
     } elseif ($certOption === 'wrong_type') {
-        // Wrong Certificate Type / Server Cert used as client (Evidence E-22)
+        
         $uploadStatus = [
             'success' => false,
             'code' => 400,
@@ -122,7 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch recent uploads
 $recentUploads = $db->query("SELECT u.*, b.name as branch_name 
     FROM sample_uploads u 
     JOIN branches b ON u.branch_id = b.id 
@@ -157,7 +152,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
 
-  <!-- mTLS Workflow Diagram Reference Card -->
+  
   <div class="cards-grid-2" style="margin-bottom: 3rem;">
     <div>
       <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.75rem;">
@@ -182,7 +177,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <!-- Interactive mTLS Simulator Form -->
+  
   <div style="background-color: var(--color-white); border: 1px solid var(--color-gray-border); border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow-lg); margin-bottom: 3rem;">
     <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem;">
       🧪 Interactive Branch mTLS Upload Simulator
@@ -258,7 +253,7 @@ require_once __DIR__ . '/includes/header.php';
           <?php echo htmlspecialchars($uploadStatus['message']); ?>
         </p>
 
-        <!-- Simulated Terminal Log Output -->
+        
         <div class="terminal-window" style="margin: 0;">
           <div class="terminal-header">
             <span class="terminal-title">Nginx mTLS Gateway Trace (upload.spordha.test:4443)</span>
@@ -271,7 +266,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php endif; ?>
   </div>
 
-  <!-- Live Upload Requisition Queue Table -->
+  
   <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 1rem;">Recent Branch Transmission Queue</h3>
   <div class="table-responsive" style="border: 1px solid var(--color-gray-border); border-radius: var(--radius-lg); overflow: hidden;">
     <table class="data-table">

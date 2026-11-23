@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Diagnostic Branch Network & mTLS Status
- * Central Laboratory (HQ Dhaka) & 3 Sample Collection Branches
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
@@ -50,7 +47,7 @@ require_once __DIR__ . '/includes/header.php';
           <strong>Hours:</strong> 7:30 AM – 10:30 PM (Emergency 24/7 Rapid Diagnostics)
         </p>
 
-        <!-- Cryptographic Device Credentials -->
+        
         <div style="background: var(--color-gray-subtle); padding: 1rem; border-radius: var(--radius-md); font-size: 0.8rem; margin-bottom: 1.25rem; border: 1px solid var(--color-gray-border); line-height: 1.6;">
           <div><strong>X.509 Client Cert Serial:</strong> <code style="font-family: var(--font-mono);"><?php echo htmlspecialchars($b['client_cert_serial']); ?></code></div>
           <div><strong>mTLS Terminal IP:</strong> <code style="font-family: var(--font-mono);"><?php echo htmlspecialchars($b['ip_address']); ?></code></div>

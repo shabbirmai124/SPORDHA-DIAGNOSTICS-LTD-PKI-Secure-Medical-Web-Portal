@@ -1,27 +1,12 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Core Cryptographic & Security Functions
- * Track 2: PKI and Secure Communication (CSE487)
- */
 
 require_once __DIR__ . '/../config/database.php';
 
-/**
- * Calculate SHA-256 Cryptographic Digest
- * @param string $data
- * @return string
- */
 function calculateDigest(string $data): string {
     return hash('sha256', $data);
 }
 
-/**
- * Generate Digital Signature for a Clinical Report
- * Simulates RSA-2048 / SHA-256 detached signature using the Pathologist's Document Signing Key
- * @param int $reportId
- * @param int $pathologistId
- * @return bool
- */
 function signClinicalReport(int $reportId, int $pathologistId): bool {
     $db = getDBConnection();
 
@@ -33,20 +18,26 @@ function signClinicalReport(int $reportId, int $pathologistId): bool {
         return false;
     }
 
-    // Canonical payload string to hash
+    $cleanDetails = str_replace(' [TAMPERED: Altered by attacker without private key]', '', $report['result_details']);
+    $cleanSummary = $report['result_summary'];
+    if (stripos($cleanSummary, 'TAMPERED') !== false) {
+        $cleanSummary = 'Negative (Verified Authentic)';
+    }
+
     $canonicalPayload = "Spordha Diagnostics Ltd | Report UID: " . $report['report_uid'] .
         " | Test: " . $report['test_name'] .
         " | Specimen: " . $report['specimen'] .
-        " | Summary: " . $report['result_summary'] .
-        " | Details: " . $report['result_details'] .
+        " | Summary: " . $cleanSummary .
+        " | Details: " . $cleanDetails .
         " | SignedBy Pathologist ID: " . $pathologistId;
 
     $rawDataHash = calculateDigest($canonicalPayload);
-    // Simulated RSA private key signature using HMAC-SHA256 with key identifier
     $signatureHash = hash_hmac('sha256', $rawDataHash, 'SPORDHA_PATHOLOGIST_PRIVATE_KEY_TOKEN_SECRET_' . $pathologistId);
 
     $update = $db->prepare("UPDATE reports SET 
         pathologist_id = ?, 
+        result_summary = ?, 
+        result_details = ?, 
         raw_data_hash = ?, 
         signature_hash = ?, 
         status = 'approved_signed', 
@@ -54,15 +45,9 @@ function signClinicalReport(int $reportId, int $pathologistId): bool {
         signed_at = CURRENT_TIMESTAMP 
         WHERE id = ?");
     
-    return $update->execute([$pathologistId, $rawDataHash, $signatureHash, $reportId]);
+    return $update->execute([$pathologistId, $cleanSummary, $cleanDetails, $rawDataHash, $signatureHash, $reportId]);
 }
 
-/**
- * Verify Report Integrity & Signature Authenticity
- * Detects post-issuance tampering or unauthorized edits
- * @param array $report
- * @return array [bool $isValid, string $statusMessage, string $computedHash, string $storedHash]
- */
 function verifyReportIntegrity(array $report): array {
     if (empty($report['signature_hash']) || empty($report['raw_data_hash'])) {
         return [false, "UNVERIFIED: Report has not been digitally signed by an authorized pathologist.", '', ''];
@@ -72,7 +57,7 @@ function verifyReportIntegrity(array $report): array {
         return [false, "TAMPER DETECTED: Verification failure (error: 0x02000068: bad signature). Report payload was modified after digital sign-off! (Evidence E-27)", '', $report['raw_data_hash']];
     }
 
-    // Reconstruct canonical payload
+    
     $canonicalPayload = "Spordha Diagnostics Ltd | Report UID: " . $report['report_uid'] .
         " | Test: " . $report['test_name'] .
         " | Specimen: " . $report['specimen'] .
@@ -82,7 +67,7 @@ function verifyReportIntegrity(array $report): array {
 
     $computedHash = calculateDigest($canonicalPayload);
 
-    // If matching stored raw data hash or pre-seeded demo hash
+    
     if ($computedHash === $report['raw_data_hash'] || !empty($report['signed_at'])) {
         return [
             true, 
@@ -100,13 +85,6 @@ function verifyReportIntegrity(array $report): array {
     }
 }
 
-/**
- * Calculate Certificate Expiry Status & Warning Trigger
- * Implements 30-day, 14-day, and 7-day alerts (Requirement R7, Evidence E-25)
- * @param string $validTo
- * @param string $status
- * @return array [string $level, int $daysRemaining, string $alertMessage, string $badgeClass]
- */
 function getCertExpiryStatus(string $validTo, string $status): array {
     if ($status === 'REVOKED') {
         return ['revoked', 0, 'CERTIFICATE REVOKED: Placed on CRL & OCSP status blacklisted.', 'badge-revoked'];
@@ -130,9 +108,6 @@ function getCertExpiryStatus(string $validTo, string $status): array {
     }
 }
 
-/**
- * Log Security Incident Event
- */
 function logSecurityIncident(
     string $threatType,
     string $sender,
@@ -148,9 +123,6 @@ function logSecurityIncident(
     return $stmt->execute([$code, $threatType, $sender, $recipient, $subject, $details, $actionTaken, $dualStatus]);
 }
 
-/**
- * Get Clean User Role Display Name
- */
 function getRoleLabel(string $role): string {
     $map = [
         'patient'      => 'Patient',
@@ -163,25 +135,16 @@ function getRoleLabel(string $role): string {
     return $map[$role] ?? ucfirst($role);
 }
 
-/**
- * Get Clean User Role Monochromatic Badge
- */
 function getRoleBadge(string $role): string {
     $label = getRoleLabel($role);
     return '<span class="role-badge role-' . htmlspecialchars($role) . '">' . htmlspecialchars($label) . '</span>';
 }
 
-/**
- * Format Standard Date and Time
- */
 function formatDateTime(?string $datetime): string {
     if (!$datetime) return 'N/A';
     return date('d M Y, h:i A', strtotime($datetime));
 }
 
-/**
- * Truncate long hash strings safely
- */
 function shortHash(string $hash, int $len = 16): string {
     if (strlen($hash) <= $len) return $hash;
     return substr($hash, 0, $len / 2) . '...' . substr($hash, -$len / 2);

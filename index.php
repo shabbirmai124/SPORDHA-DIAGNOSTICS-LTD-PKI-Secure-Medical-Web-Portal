@@ -1,31 +1,25 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - High-Security Diagnostic Portal Landing Page
- * Monochromatic Design System (White, Black, Charcoal & Neutral Grays)
- */
 
 $pageTitle = "Home | High-Security Diagnostic Laboratory PKI Portal";
 require_once __DIR__ . '/includes/header.php';
 
 $db = getDBConnection();
 
-// Fetch sample active reports
 $recentReports = $db->query("SELECT r.*, u.name as patient_name, b.name as branch_name 
     FROM reports r 
     JOIN users u ON r.patient_id = u.id 
     LEFT JOIN branches b ON r.branch_id = b.id 
     ORDER BY r.id ASC LIMIT 4")->fetchAll();
 
-// Fetch security incident count
 $incidentCount = $db->query("SELECT count(*) FROM incident_logs")->fetchColumn();
 $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID'")->fetchColumn();
 ?>
 
-<!-- Hero Section -->
 <section class="hero-section">
   <div class="container">
     <div class="hero-grid">
-      <!-- Left Column: Vision & Trust -->
+      
       <div class="hero-content reveal">
         <div class="hero-badge-tag">
           <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#000;"></span>
@@ -73,7 +67,7 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
         </div>
       </div>
 
-      <!-- Right Column: Quick Report Verification & One-Click Demo Role Switcher -->
+      
       <div class="hero-card-widget reveal">
         <div class="widget-header">
           <div>
@@ -97,7 +91,7 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
           </div>
         </form>
 
-        <!-- One-Click Demo Role Switcher -->
+        
         <div class="demo-credentials-box">
           <h4>Instant Demo Role Sign-In</h4>
           <p style="font-size: 0.75rem; color: var(--color-gray-dark); margin-bottom: 0.75rem;">
@@ -113,7 +107,7 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
           </div>
         </div>
 
-        <!-- Security Indicators -->
+        
         <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--color-gray-border); display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--color-gray-mid);">
           <span>Root CA: <strong style="color: #000;">Offline (Power Down)</strong></span>
           <span>TLS 1.3: <strong style="color: #15803d;">Active</strong></span>
@@ -124,7 +118,6 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
   </div>
 </section>
 
-<!-- Core Security Architecture Pillars -->
 <section class="features-section">
   <div class="container">
     <div class="section-head reveal">
@@ -136,7 +129,7 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
     </div>
 
     <div class="cards-grid-4 reveal">
-      <!-- Feature 1: Two-Tier CA -->
+      
       <div class="card-item">
         <div class="card-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg>
@@ -148,7 +141,7 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
         <a href="pki_soc.php#ca_tree" class="card-link">View CA Hierarchy →</a>
       </div>
 
-      <!-- Feature 2: mTLS Uploads -->
+      
       <div class="card-item">
         <div class="card-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg>
@@ -160,7 +153,7 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
         <a href="branch_upload.php" class="card-link">Simulate mTLS Upload →</a>
       </div>
 
-      <!-- Feature 3: Digital Signatures -->
+      
       <div class="card-item">
         <div class="card-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M8 17c2-4 4 1 6-2"/></svg>
@@ -172,7 +165,7 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
         <a href="verify.php" class="card-link">Tamper Detection Lab →</a>
       </div>
 
-      <!-- Feature 4: AI Defense -->
+      
       <div class="card-item">
         <div class="card-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3 8-8 9-5-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -187,7 +180,6 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
   </div>
 </section>
 
-<!-- Target Architecture & Lab Topology Visual Preview -->
 <section class="architecture-section">
   <div class="container">
     <div class="section-head reveal">
@@ -199,7 +191,7 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
     </div>
 
     <div class="cards-grid-2 reveal">
-      <!-- Diagram 1 -->
+      
       <div class="diagram-preview-card">
         <img src="assets1/D1_target_architecture.png" alt="Spordha Diagnostics Ltd. Target Architecture Diagram D1">
         <div class="diagram-caption">
@@ -211,7 +203,7 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
         </div>
       </div>
 
-      <!-- Diagram 2 -->
+      
       <div class="diagram-preview-card">
         <img src="assets1/D3_virtual_lab_topology.png" alt="Spordha Diagnostics Ltd. Isolated Virtual Lab Topology D3">
         <div class="diagram-caption">
@@ -226,7 +218,6 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
   </div>
 </section>
 
-<!-- Active Reports Showcase -->
 <section class="features-section" style="background-color: var(--color-white);">
   <div class="container">
     <div class="section-head reveal">
@@ -297,7 +288,6 @@ $certCount = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID
   </div>
 </section>
 
-<!-- Statutory Compliance Banner -->
 <section style="background-color: var(--color-black); color: #fff; padding: 3.5rem 0; border-top: 1px solid var(--color-charcoal);">
   <div class="container">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">

@@ -1,7 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Dual-Approval & Security Incident API
- */
 
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/database.php';

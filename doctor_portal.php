@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Referring Doctor Portal
- * Clinical Case Review & Direct Pathology Verification
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
@@ -16,7 +13,6 @@ if (!isLoggedIn()) {
 $user = currentUser();
 $db = getDBConnection();
 
-// Fetch referred patients' reports
 $stmt = $db->query("SELECT r.*, u.name as patient_name, u.phone as patient_phone, u.nid as patient_nid, b.name as branch_name, patho.name as pathologist_name 
     FROM reports r 
     JOIN users u ON r.patient_id = u.id 
@@ -52,7 +48,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
 
-  <!-- Physician Guide Box -->
+  
   <div style="background-color: var(--color-white); border: 1px solid var(--color-gray-border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 2.5rem;">
     <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem;">
       🩺 Physician Verification Protocol for Forwarded Reports
@@ -76,7 +72,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <!-- Reports Table -->
+  
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
     <h3 style="font-size: 1.35rem; font-weight: 800;">Referred Diagnostic Results</h3>
     <input type="text" class="form-control table-search-input" data-target-table="#doctorTable" placeholder="Search by patient, NID, test..." style="max-width: 300px;">

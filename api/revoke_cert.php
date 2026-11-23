@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Real-Time Certificate Revocation API
- * Updates CRL status and database certificate status
- */
 
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/database.php';
@@ -18,7 +15,6 @@ $certId = (int)$data['cert_id'];
 $action = $data['action'] ?? 'revoke';
 $db = getDBConnection();
 
-// Check certificate
 $stmt = $db->prepare("SELECT * FROM certificates WHERE id = ?");
 $stmt->execute([$certId]);
 $cert = $stmt->fetch();
@@ -43,7 +39,7 @@ if ($action === 'revoke') {
         'message' => "Certificate [{$cert['common_name']}] has been revoked and appended to CRL (issuing-ca.crl). Nginx CRL directive will refuse subsequent connections."
     ]);
 } else {
-    // Reinstate
+    
     $up = $db->prepare("UPDATE certificates SET status = 'VALID', revocation_date = NULL, revocation_reason = NULL WHERE id = ?");
     $up->execute([$certId]);
 

@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - User Registration Page
- * New Patient / Staff Account Registration
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
@@ -22,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nid      = trim($_POST['nid'] ?? '');
         $password = $_POST['password'] ?? '';
         $confirm  = $_POST['confirm_password'] ?? '';
-        $role     = 'patient'; // Default: public registration is patient only
+        $role     = 'patient'; 
 
         if (empty($name) || empty($email) || empty($password)) {
             $error = "Name, email, and password are required fields.";
@@ -32,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = "Passwords do not match. Please re-enter.";
         } else {
             $db = getDBConnection();
-            // Check duplicate email
+            
             $check = $db->prepare("SELECT id FROM users WHERE email = ?");
             $check->execute([$email]);
             if ($check->fetch()) {

@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Public Report Authenticity Verifier & Tamper Lab
- * Real-time SHA-256 Verification & Cryptographic Integrity Testing
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
@@ -58,7 +55,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
 
-  <!-- SECTION 1: REPORT SEARCH & LOOKUP -->
+  
   <div style="background-color: var(--color-white); border: 1px solid var(--color-gray-border); border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow-md); margin-bottom: 3.5rem;">
     <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">
       Search & Verify Document Signature
@@ -81,7 +78,7 @@ require_once __DIR__ . '/includes/header.php';
       <a href="verify.php?uid=SPD-2026-90499" style="color: #b91c1c; text-decoration: underline; font-weight: 700;">SPD-2026-90499 (Tampered Visa Medical)</a>
     </div>
 
-    <!-- Verification Output Card -->
+    
     <?php if ($searchedReport): ?>
       <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-gray-border);">
         
@@ -111,7 +108,7 @@ require_once __DIR__ . '/includes/header.php';
           </div>
         </div>
 
-        <!-- Verification Detail Banner -->
+        
         <div class="tamper-box <?php echo $searchedReport['is_tampered'] ? 'tampered' : 'genuine'; ?>" style="margin-bottom: 1.5rem;">
           <h4 style="margin-bottom: 0.5rem; color: <?php echo $searchedReport['is_tampered'] ? '#991b1b' : '#166534'; ?>;">
             <?php echo $searchedReport['is_tampered'] ? 'Integrity Check Failed: Signature Mismatch' : 'Integrity Check Passed: Authoritative Pathologist Sign-off'; ?>
@@ -142,7 +139,7 @@ require_once __DIR__ . '/includes/header.php';
     <?php endif; ?>
   </div>
 
-  <!-- SECTION 2: INTERACTIVE TAMPER PLAYGROUND -->
+  
   <div id="interactive_lab" style="background-color: var(--color-white); border: 1px solid var(--color-gray-border); border-radius: var(--radius-xl); padding: 2.5rem; box-shadow: var(--shadow-lg);">
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
       <div>
@@ -166,7 +163,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 
     <div class="tamper-lab-grid">
-      <!-- Input Side -->
+      
       <div>
         <label for="interactivePayloadInput" style="display: block; font-size: 0.8125rem; font-weight: 700; margin-bottom: 0.4rem;">
           Clinical Report Text Payload (report.txt):
@@ -183,18 +180,18 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       </div>
 
-      <!-- Verification Status Output Side -->
+      
       <div>
         <label style="display: block; font-size: 0.8125rem; font-weight: 700; margin-bottom: 0.4rem;">
           Simulated OpenSSL Public Key Signature Verification:
         </label>
         <div id="interactiveVerifyResult" class="tamper-box genuine" style="min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
-          <!-- Dynamically populated by assets/js/verify.js -->
+          
         </div>
       </div>
     </div>
 
-    <!-- Technical Note -->
+    
     <div style="margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--color-gray-border); font-size: 0.8125rem; color: var(--color-gray-mid); line-height: 1.6;">
       <strong>Why this prevents forgery:</strong> Because an attacker does not possess the pathologist's RSA private key, any change to the clinical report (even altering a single character from "Negative" to "Positive") results in an entirely different SHA-256 digest via the avalanche effect. When decrypted with the pathologist's public key, the mathematical signature check fails completely.
     </div>

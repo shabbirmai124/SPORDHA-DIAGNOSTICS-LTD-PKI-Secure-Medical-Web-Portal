@@ -1,10 +1,11 @@
-  </main>
+<!-- Md Shabbir Mia -->
+</main>
 
-  <!-- Site Footer -->
+  
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
-        <!-- Brand & Academic Overview -->
+        
         <div class="footer-col">
           <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
             <div class="brand-icon-box" style="width: 32px; height: 32px; font-size: 1rem;">S</div>
@@ -22,7 +23,7 @@
           </div>
         </div>
 
-        <!-- Portals & Services -->
+        
         <div class="footer-col">
           <h4>Secure Portals</h4>
           <ul class="footer-links">
@@ -37,7 +38,7 @@
           </ul>
         </div>
 
-        <!-- Statutory & Standards Compliance -->
+        
         <div class="footer-col">
           <h4>Legal & Standards</h4>
           <ul class="footer-links">
@@ -50,7 +51,7 @@
           </ul>
         </div>
 
-        <!-- Diagnostic Branches -->
+        
         <div class="footer-col">
           <h4>Lab Locations</h4>
           <ul class="footer-links">
@@ -81,7 +82,7 @@
         <div style="display: flex; gap: 1rem;">
           <a href="documentation.php" style="color: inherit; text-decoration: none;">Security Architecture</a>
           <span>•</span>
-          <a href="evidence_gallery.php" style="color: inherit; text-decoration: none;">Evidence Gallery (E-01 – E-28)</a>
+          <a href="evidence_gallery.php" style="color: inherit; text-decoration: none;">Evidence Gallery (E-01 – E-31)</a>
           <span>•</span>
           <a href="verify.php" style="color: inherit; text-decoration: none;">Report Integrity Verifier</a>
         </div>
@@ -89,10 +90,10 @@
     </div>
   </footer>
 
-  <!-- Back to top -->
+  <div id="spordhaToast" role="status" aria-live="polite" style="display:none; position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); background:#09090b; color:#fff; padding:0.85rem 1.35rem; border-radius:8px; font-size:0.85rem; font-weight:600; box-shadow:0 12px 30px rgba(0,0,0,0.3); z-index:9999; max-width:90vw; border:1px solid #27272a;"></div>
+
   <button class="back-to-top" aria-label="Back to top">↑</button>
 
-  <!-- Scripts -->
   <script src="assets/js/main.js"></script>
   <?php if (isset($loadVerifyScript) && $loadVerifyScript): ?>
     <script src="assets/js/verify.js"></script>

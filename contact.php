@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Contact Us Page
- * Laboratory Contact Info & Inquiry Form
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
@@ -13,7 +10,7 @@ $branches = $db->query("SELECT * FROM branches ORDER BY id ASC")->fetchAll();
 $submitted = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // In a real system we'd email or store the inquiry
+    
     $submitted = true;
 }
 
@@ -34,7 +31,7 @@ require_once __DIR__ . '/includes/header.php';
 <div class="container" style="padding-top: 3rem; padding-bottom: 4rem;">
 
   <div class="cards-grid-2" style="gap: 3rem;">
-    <!-- Contact Form -->
+    
     <div>
       <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 1.25rem;">Send Us a Message</h3>
 
@@ -85,7 +82,7 @@ require_once __DIR__ . '/includes/header.php';
       <?php endif; ?>
     </div>
 
-    <!-- Contact Details -->
+    
     <div>
       <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 1.25rem;">Our Laboratory Locations</h3>
 
@@ -103,7 +100,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       <?php endforeach; ?>
 
-      <!-- Emergency Info Box -->
+      
       <div style="background-color: var(--color-black); color: #fff; padding: 1.5rem; border-radius: var(--radius-lg); margin-top: 1.5rem;">
         <h4 style="font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; color: #fff;">
           24/7 Emergency Rapid Diagnostics

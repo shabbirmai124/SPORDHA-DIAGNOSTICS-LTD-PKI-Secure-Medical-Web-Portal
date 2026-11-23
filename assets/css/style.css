@@ -1,7 +1,4 @@
-/* ==========================================================================
-   Spordha Diagnostics Ltd. - Modern Monochromatic Design System
-   Palette: White, Black, Charcoal & Neutral Grays
-   ========================================================================== */
+/* Md Shabbir Mia */
 
 :root {
   --color-black: #09090b;
@@ -16,7 +13,7 @@
   --color-gray-subtle: #fafafa;
   --color-white: #ffffff;
 
-  /* Grey / slate accent scale */
+  
   --color-slate-50: #f8fafc;
   --color-slate-200: #e2e8f0;
   --color-slate-400: #94a3b8;
@@ -25,7 +22,7 @@
   --color-slate-700: #334155;
   --color-slate-800: #1e293b;
 
-  /* Monochromatic Semantic Accents */
+  
   --status-valid-bg: #f0fdf4;
   --status-valid-text: #166534;
   --status-valid-border: #bbf7d0;
@@ -56,7 +53,6 @@
   --transition-normal: 0.25s ease;
 }
 
-/* Global Reset & Base */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -79,7 +75,6 @@ body {
   flex-direction: column;
 }
 
-/* Layout Utilities */
 .container {
   width: 100%;
   max-width: 1280px;
@@ -97,7 +92,6 @@ body {
   flex: 1 0 auto;
 }
 
-/* Top Security Announcement Banner */
 .security-top-banner {
   background: linear-gradient(90deg, #18181b 0%, #3f3f46 100%);
   color: var(--color-gray-light);
@@ -147,7 +141,6 @@ body {
   box-shadow: none;
 }
 
-/* Header & Navigation */
 .site-header {
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-gray-border);
@@ -234,7 +227,6 @@ body {
   gap: 0.75rem;
 }
 
-/* Mobile Toggle */
 .mobile-toggle {
   display: none;
   background: none;
@@ -245,7 +237,6 @@ body {
   color: var(--color-black);
 }
 
-/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -308,7 +299,6 @@ body {
   border-radius: var(--radius-lg);
 }
 
-/* Hero Section */
 .hero-section {
   padding: 4.5rem 0 3.5rem;
   background: linear-gradient(180deg, var(--color-white) 0%, var(--color-gray-subtle) 100%);
@@ -382,7 +372,6 @@ body {
   font-weight: 500;
 }
 
-/* Quick Report Verification Widget (Hero Right) */
 .hero-card-widget {
   background-color: var(--color-white);
   border: 1px solid var(--color-gray-border);
@@ -506,7 +495,6 @@ body {
   border-color: var(--color-black);
 }
 
-/* Feature Cards Grid */
 .features-section {
   padding: 4.5rem 0;
   background-color: var(--color-white);
@@ -622,7 +610,6 @@ body {
   text-decoration: underline;
 }
 
-/* Security Architecture Section */
 .architecture-section {
   padding: 4.5rem 0;
   background-color: var(--color-gray-subtle);
@@ -664,7 +651,6 @@ body {
   color: var(--color-gray-mid);
 }
 
-/* Badges */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -719,14 +705,12 @@ body {
 .role-branch_staff { background-color: #52525b; }
 .role-pki_admin { background-color: #000000; border: 1px solid #71717a; }
 
-/* Keep the signed-in role badge compact inside the top bar */
 .site-header .role-badge {
   font-size: 0.62rem;
   padding: 0.12rem 0.42rem;
   letter-spacing: 0.3px;
 }
 
-/* Tables */
 .table-responsive {
   width: 100%;
   overflow-x: auto;
@@ -761,7 +745,6 @@ body {
   background-color: var(--color-gray-subtle);
 }
 
-/* Modals & Popups */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -817,7 +800,6 @@ body {
   padding: 1.75rem;
 }
 
-/* Footer */
 .site-footer {
   background-color: var(--color-black);
   color: var(--color-gray-light);
@@ -873,7 +855,6 @@ body {
   color: var(--color-gray-mid);
 }
 
-/* Responsive Media Queries */
 @media (max-width: 1024px) {
   .nav-links {
     display: none;
@@ -917,8 +898,6 @@ body {
   }
 }
 
-
-/* Tab System */
 .tab-container .tab-btn {
   position: relative;
 }
@@ -943,7 +922,6 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Alert Boxes */
 .alert-success {
   background-color: #f0fdf4;
   border-left: 4px solid #22c55e;
@@ -973,19 +951,16 @@ body {
   font-size: 0.875rem;
 }
 
-/* Textarea Styling */
 textarea.form-control {
   resize: vertical;
   min-height: 80px;
 }
 
-/* Select Styling */
 select.form-control {
   appearance: auto;
   cursor: pointer;
 }
 
-/* Back To Top */
 .back-to-top {
   position: fixed;
   bottom: 2rem;
@@ -1010,7 +985,6 @@ select.form-control {
   display: flex;
 }
 
-/* Loading Spinner */
 .spinner {
   width: 20px;
   height: 20px;
@@ -1025,7 +999,6 @@ select.form-control {
   to { transform: rotate(360deg); }
 }
 
-/* Image hover zoom */
 .diagram-preview-card img {
   transition: transform var(--transition-normal);
 }
@@ -1034,7 +1007,6 @@ select.form-control {
   transform: scale(1.02);
 }
 
-/* Link hover underline animation */
 .card-link::after {
   content: '';
   display: block;
@@ -1048,14 +1020,12 @@ select.form-control {
   width: 100%;
 }
 
-/* Copied button state */
 .btn-copied {
   background-color: #166534 !important;
   color: #fff !important;
   border-color: #166534 !important;
 }
 
-/* Toast Notification */
 .toast {
   position: fixed;
   bottom: 2rem;
@@ -1078,7 +1048,6 @@ select.form-control {
   opacity: 1;
 }
 
-/* Responsive improvements */
 @media (max-width: 576px) {
   .hero-title {
     font-size: 1.75rem;
@@ -1106,10 +1075,6 @@ select.form-control {
     justify-content: center;
   }
 }
-
-/* ==========================================================================
-   Report / Documentation Professional Layout (16-section viewer)
-   ========================================================================== */
 
 .doc-hero {
   background: linear-gradient(180deg, var(--color-black) 0%, var(--color-dark-gray) 100%);
@@ -1334,7 +1299,6 @@ select.form-control {
   color: var(--color-black);
 }
 
-/* Callout boxes */
 .callout {
   border-radius: var(--radius-md);
   padding: 1rem 1.25rem;
@@ -1378,7 +1342,6 @@ select.form-control {
   color: var(--status-revoked-text);
 }
 
-/* Inline key-value chips */
 .kv-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -1409,7 +1372,6 @@ select.form-control {
   line-height: 1.4;
 }
 
-/* Compact data table inside documentation */
 .doc-section .data-table {
   margin: 1rem 0 1.5rem;
   border: 1px solid var(--color-gray-border);
@@ -1421,13 +1383,11 @@ select.form-control {
   border-bottom: 1px solid var(--color-gray-border);
 }
 
-/* Risk score color coding */
 .risk-critical { color: #b91c1c; font-weight: 800; }
 .risk-high { color: #c2410c; font-weight: 700; }
 .risk-medium { color: #a16207; font-weight: 700; }
 .risk-low { color: #15803d; font-weight: 700; }
 
-/* Print styles for the report */
 @media print {
   .security-top-banner,
   .site-header,
@@ -1471,7 +1431,6 @@ select.form-control {
   }
 }
 
-/* Focus visibility for accessibility */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -1486,11 +1445,6 @@ textarea:focus-visible {
   color: #fff;
 }
 
-/* ==========================================================================
-   Enterprise polish — grey mesh, live status, reveal & motion
-   ========================================================================== */
-
-/* Refined hero with soft grey radial mesh */
 .hero-section {
   background:
     radial-gradient(1100px 520px at 8% -12%, rgba(148, 163, 184, 0.22), transparent 60%),
@@ -1499,7 +1453,6 @@ textarea:focus-visible {
     linear-gradient(180deg, #fbfbfc 0%, #eceef1 100%);
 }
 
-/* Live status pulse on the security banner dots */
 .sec-pill .dot {
   animation: statusPulse 2.2s ease-in-out infinite;
 }
@@ -1513,7 +1466,6 @@ textarea:focus-visible {
   50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
 }
 
-/* Scroll-reveal */
 .reveal {
   opacity: 0;
   transform: translateY(18px);
@@ -1539,7 +1491,6 @@ textarea:focus-visible {
   }
 }
 
-/* Refined data tables — zebra + hover */
 .data-table tbody tr:nth-child(even) td {
   background: #fafafa;
 }
@@ -1548,7 +1499,6 @@ textarea:focus-visible {
   background: #f1f2f5;
 }
 
-/* Button depth */
 .btn {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
@@ -1562,7 +1512,6 @@ textarea:focus-visible {
   box-shadow: 0 6px 14px -6px rgba(15, 23, 42, 0.45);
 }
 
-/* Card hover refinement */
 .card-item {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
@@ -1572,25 +1521,21 @@ textarea:focus-visible {
   box-shadow: 0 22px 40px -18px rgba(15, 23, 42, 0.28);
 }
 
-/* Stat counter emphasis */
 .stat-item h3 {
   color: var(--color-black);
   letter-spacing: -0.5px;
 }
 
-/* Section badge on dark heroes keeps contrast */
 .doc-hero .section-badge,
 .hero-section .section-badge {
   background: var(--color-slate-200);
   color: var(--color-slate-700);
 }
 
-/* Smooth anchor offset for the report */
 .doc-section {
   scroll-margin-top: 96px;
 }
 
-/* Subtle focus ring color shift to slate */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,

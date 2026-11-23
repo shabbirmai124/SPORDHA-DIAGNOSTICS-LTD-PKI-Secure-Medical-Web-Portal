@@ -1,14 +1,10 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Unified Role-Based Laboratory Dashboard
- * Monochromatic Professional Interface
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/functions.php';
 
-// Ensure user is authenticated
 if (!isLoggedIn()) {
     header("Location: login.php?msg=" . urlencode("Please log in to access your dashboard."));
     exit;
@@ -18,11 +14,9 @@ $user = currentUser();
 $db = getDBConnection();
 $role = $user['role'];
 
-// Handle action messages
 $successMsg = $_GET['success'] ?? '';
 $errorMsg = $_GET['err'] ?? '';
 
-// Specific data retrieval by role
 if ($role === 'patient') {
     $stmt = $db->prepare("SELECT r.*, b.name as branch_name, doc.name as doctor_name, patho.name as pathologist_name 
         FROM reports r 
@@ -34,7 +28,7 @@ if ($role === 'patient') {
     $stmt->execute([$user['id']]);
     $patientReports = $stmt->fetchAll();
 
-    // Stats
+    
     $totalReports = count($patientReports);
     $signedReports = count(array_filter($patientReports, fn($r) => $r['status'] === 'approved_signed'));
 } elseif ($role === 'doctor') {
@@ -58,7 +52,7 @@ if ($role === 'patient') {
     $signedCount = count(array_filter($allReports, fn($r) => $r['status'] === 'approved_signed'));
     $tamperedCount = count(array_filter($allReports, fn($r) => $r['is_tampered'] == 1));
 } elseif ($role === 'branch_staff') {
-    $branchId = $user['branch_id'] ?? 3; // Uttara default
+    $branchId = $user['branch_id'] ?? 3; 
     $bStmt = $db->prepare("SELECT * FROM branches WHERE id = ?");
     $bStmt->execute([$branchId]);
     $branch = $bStmt->fetch();
@@ -67,7 +61,7 @@ if ($role === 'patient') {
     $uStmt->execute([$branchId]);
     $branchUploads = $uStmt->fetchAll();
 } else {
-    // PKI Administrator / Technician
+    
     $totalCerts = $db->query("SELECT count(*) FROM certificates")->fetchColumn();
     $validCerts = $db->query("SELECT count(*) FROM certificates WHERE status = 'VALID'")->fetchColumn();
     $revokedCerts = $db->query("SELECT count(*) FROM certificates WHERE status = 'REVOKED'")->fetchColumn();
@@ -76,7 +70,6 @@ if ($role === 'patient') {
     $allCerts = $db->query("SELECT * FROM certificates ORDER BY id ASC")->fetchAll();
 }
 
-// Certificate inventory table is shared by every role's dashboard view
 if (!isset($allCerts)) {
     $allCerts = $db->query("SELECT * FROM certificates ORDER BY id ASC")->fetchAll();
 }
@@ -86,7 +79,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="dashboard-layout">
-  <!-- Left Sidebar -->
+  
   <aside class="dashboard-sidebar">
     <div class="sidebar-profile">
       <div class="profile-avatar">
@@ -167,7 +160,7 @@ require_once __DIR__ . '/includes/header.php';
       <li class="sidebar-menu-item">
         <a href="evidence_gallery.php" class="sidebar-link">
           <span class="icon">📸</span>
-          <span>Evidence Gallery (E01-E28)</span>
+          <span>Evidence Gallery (E01-E31)</span>
         </a>
       </li>
       <li class="sidebar-menu-item">
@@ -185,7 +178,7 @@ require_once __DIR__ . '/includes/header.php';
     </ul>
   </aside>
 
-  <!-- Main Dashboard Content -->
+  
   <main class="dashboard-main">
     
     <div class="dashboard-header">
@@ -210,10 +203,10 @@ require_once __DIR__ . '/includes/header.php';
       </div>
     <?php endif; ?>
 
-    <!-- ROLE SPECIFIC VIEWS -->
+    
 
     <?php if ($role === 'patient'): ?>
-      <!-- PATIENT DASHBOARD -->
+      
       <div class="metrics-row">
         <div class="metric-card">
           <div class="label">Total Investigations</div>
@@ -291,7 +284,7 @@ require_once __DIR__ . '/includes/header.php';
       </div>
 
     <?php elseif ($role === 'doctor'): ?>
-      <!-- DOCTOR DASHBOARD -->
+      
       <div class="metrics-row">
         <div class="metric-card">
           <div class="label">Referred Patients</div>
@@ -359,7 +352,7 @@ require_once __DIR__ . '/includes/header.php';
       </div>
 
     <?php elseif ($role === 'branch_staff'): ?>
-      <!-- BRANCH STAFF DASHBOARD -->
+      
       <div class="metrics-row">
         <div class="metric-card">
           <div class="label">Branch Name</div>
@@ -426,7 +419,7 @@ require_once __DIR__ . '/includes/header.php';
       </div>
 
     <?php else: ?>
-      <!-- PKI ADMINISTRATOR / PATHOLOGIST / TECHNICIAN DASHBOARD -->
+      
       <div class="metrics-row">
         <div class="metric-card">
           <div class="label">Total Certificates</div>
@@ -450,7 +443,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       </div>
 
-      <!-- Quick SOC Navigation Cards -->
+      
       <div class="cards-grid-3" style="margin-bottom: 2.5rem;">
         <div class="card-item">
           <h3>Two-Tier CA Status</h3>
@@ -469,7 +462,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       </div>
 
-      <!-- Live Certificate Inventory Table -->
+      
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
         <h3 style="font-size: 1.15rem; font-weight: 700;">Spordha Laboratory Certificate Inventory (A1/A17)</h3>
         <a href="pki_soc.php" class="btn btn-outline-dark btn-sm">Open Full PKI Operations Center</a>

@@ -1,8 +1,5 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. — Academic Project Report & Security Specification
- * Complete 16-section report + A1–A9 templates + evidence appendix (CSE487 Track 2).
- */
 
 function docTable(array $headers, array $rows): string {
     $html = '<div class="table-responsive"><table class="data-table"><thead><tr>';
@@ -113,7 +110,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <div class="doc-content">
 
-      <!-- ============ SECTION 1 ============ -->
+      
       <article class="doc-section" id="sec1">
         <div class="doc-section-head">
           <span class="doc-section-num">S01</span>
@@ -148,8 +145,9 @@ require_once __DIR__ . '/includes/header.php';
         <?php echo callout('note', 'Priority decisions for the team', 'Standardize on <strong>Spordha Diagnostics Ltd.</strong> and <code>.spordha.test</code>; replace the unencrypted RSA-2048 root key and take the root VM offline; complete and record the 13 minimum tests with correct certificates and revocation status; use a dedicated document-signing key for PDF reports; and complete the legal/ethical approval record before submission.'); ?>
       </article>
 
-      <!-- ============ SECTION 2 ============ -->
+      
       <article class="doc-section" id="sec2">
+        <span id="architecture"></span>
         <div class="doc-section-head">
           <span class="doc-section-num">S02</span>
           <div>
@@ -216,7 +214,7 @@ require_once __DIR__ . '/includes/header.php';
         ); ?>
       </article>
 
-      <!-- ============ SECTION 3 ============ -->
+      
       <article class="doc-section" id="sec3">
         <div class="doc-section-head">
           <span class="doc-section-num">S03</span>
@@ -251,7 +249,7 @@ require_once __DIR__ . '/includes/header.php';
         ); ?>
       </article>
 
-      <!-- ============ SECTION 4 ============ -->
+      
       <article class="doc-section" id="sec4">
         <div class="doc-section-head">
           <span class="doc-section-num">S04</span>
@@ -302,7 +300,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php echo callout('evidence', 'Evidence limitation', 'The supplied signature screenshots prove a detached signature over a <em>text file</em> and detect a later edit. They do not prove that a PDF has been signed with a dedicated document-signing certificate, or that the signer’s certificate was valid and unrevoked at signing time.'); ?>
       </article>
 
-      <!-- ============ SECTION 5 ============ -->
+      
       <article class="doc-section" id="sec5">
         <div class="doc-section-head">
           <span class="doc-section-num">S05</span>
@@ -344,7 +342,7 @@ require_once __DIR__ . '/includes/header.php';
         ); ?>
       </article>
 
-      <!-- ============ SECTION 6 ============ -->
+      
       <article class="doc-section" id="sec6">
         <div class="doc-section-head">
           <span class="doc-section-num">S06</span>
@@ -416,8 +414,9 @@ require_once __DIR__ . '/includes/header.php';
         ); ?>
       </article>
 
-      <!-- ============ SECTION 7 ============ -->
+      
       <article class="doc-section" id="sec7">
+        <span id="standards"></span>
         <div class="doc-section-head" id="a5">
           <span class="doc-section-num">S07</span>
           <div>
@@ -441,7 +440,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php echo callout('note', 'Standards conflicts resolved', 'The brief names RFC 8446, which RFC 9846 obsoletes — the report cites both. Public-Web-PKI (CA/Browser Forum) lifetime rules are not automatically binding on a closed <code>.test</code> CA; the team adopts short-lived 90-day leaves as an internal risk decision. The old branch PC is isolated or upgraded rather than enabling obsolete TLS on the public portal. Fail-closed revocation is preserved through an encrypted local queue, not by accepting unverified identities.'); ?>
       </article>
 
-      <!-- ============ SECTION 8 ============ -->
+      
       <article class="doc-section" id="sec8">
         <div class="doc-section-head" id="a4">
           <span class="doc-section-num">S08</span>
@@ -463,7 +462,7 @@ require_once __DIR__ . '/includes/header.php';
         ); ?>
       </article>
 
-      <!-- ============ SECTION 9 ============ -->
+      
       <article class="doc-section" id="sec9">
         <div class="doc-section-head">
           <span class="doc-section-num">S09</span>
@@ -501,7 +500,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php echo callout('note', 'Project identity &amp; hostname standard', 'The project consistently uses <strong>Spordha Diagnostics Ltd.</strong> with <code>portal.spordha.test</code>, <code>upload.spordha.test</code> and <code>branch-01.spordha.test</code> in the reserved <code>.test</code> namespace — intended only for the isolated student lab, with no claim that a real organisation or production domain is represented.'); ?>
       </article>
 
-      <!-- ============ SECTION 10 ============ -->
+      
       <article class="doc-section" id="sec10">
         <div class="doc-section-head">
           <span class="doc-section-num">S10</span>
@@ -551,8 +550,9 @@ require_once __DIR__ . '/includes/header.php';
         <p style="font-size:0.78rem;color:var(--color-gray-mid);">*TC-14 passes for detached text-file tamper detection only; the PDF/document-signing requirement remains outstanding.</p>
       </article>
 
-      <!-- ============ SECTION 11 ============ -->
+      
       <article class="doc-section" id="sec11">
+        <span id="legal"></span>
         <div class="doc-section-head">
           <span class="doc-section-num">S11</span>
           <div>
@@ -615,8 +615,9 @@ require_once __DIR__ . '/includes/header.php';
         </ul>
       </article>
 
-      <!-- ============ SECTION 12 ============ -->
+      
       <article class="doc-section" id="sec12">
+        <span id="ethics"></span>
         <div class="doc-section-head">
           <span class="doc-section-num">S12</span>
           <div>
@@ -658,7 +659,7 @@ require_once __DIR__ . '/includes/header.php';
         </ul>
       </article>
 
-      <!-- ============ SECTION 13 ============ -->
+      
       <article class="doc-section" id="sec13">
         <div class="doc-section-head">
           <span class="doc-section-num">S13</span>
@@ -688,7 +689,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php echo callout('note', 'Generative-AI use declaration (Form B)', 'Generative AI was used to help structure and draft the report, organise screenshot captions, create original explanatory diagrams and identify evidence gaps. No private keys, passphrases or real patient records were supplied. The team must verify every technical/legal statement and complete Form B accurately.'); ?>
       </article>
 
-      <!-- ============ SECTION 14 ============ -->
+      
       <article class="doc-section" id="sec14">
         <div class="doc-section-head">
           <span class="doc-section-num">S14</span>
@@ -722,7 +723,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php echo callout('note', 'Reflection', 'The screenshots show practical debugging lessons: resolve host names before TLS testing; verify file paths and permissions before certificate transfer; issue a certificate for the <code>clientAuth</code> role rather than reusing a server certificate; and an echo statement is not an automated monitoring control.'); ?>
       </article>
 
-      <!-- ============ SECTION 15 ============ -->
+      
       <article class="doc-section" id="sec15">
         <div class="doc-section-head">
           <span class="doc-section-num">S15</span>
@@ -765,7 +766,7 @@ require_once __DIR__ . '/includes/header.php';
         </p>
       </article>
 
-      <!-- ============ SECTION 16 ============ -->
+      
       <article class="doc-section" id="sec16">
         <div class="doc-section-head">
           <span class="doc-section-num">S16</span>
@@ -795,7 +796,7 @@ require_once __DIR__ . '/includes/header.php';
         </ol>
       </article>
 
-      <!-- ============ APPENDIX B: EVIDENCE ============ -->
+      
       <article class="doc-section" id="evidence">
         <div class="doc-section-head">
           <span class="doc-section-num">B</span>

@@ -1,14 +1,10 @@
+<!-- Md Shabbir Mia -->
 <?php
-/**
- * Spordha Diagnostics Ltd. - Pathologist Approval & Digital Signing Studio
- * Implements Requirement R8 & Tests TC-13 / TC-14
- */
 
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/functions.php';
 
-// Allow pathologist, technician, or pki_admin to evaluate
 if (!isLoggedIn()) {
     header("Location: login.php?msg=" . urlencode("Pathologist authentication required."));
     exit;
@@ -19,7 +15,6 @@ $db = getDBConnection();
 $msg = '';
 $err = '';
 
-// Handle Digital Signing Action
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $reportId = (int)$_POST['report_id'];
     
@@ -31,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $err = "Failed to digitally sign report.";
         }
     } elseif ($_POST['action'] === 'tamper_report') {
-        // Tamper simulation matching E-27
+        
         $stmt = $db->prepare("UPDATE reports SET 
             is_tampered = 1, 
             status = 'tampered', 
@@ -42,13 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $err = "SECURITY ALERT TRIGGERED: Report payload intentionally altered. Cryptographic hash signature check will now FAIL with error 0x02000068 (Evidence E-27)!";
         }
     } elseif ($_POST['action'] === 'reset_report') {
-        // Re-sign to restore genuine state
+        
         signClinicalReport($reportId, $user['id']);
         $msg = "Report restored to genuine pathologist sign-off. Cryptographic verification is once again VALID.";
     }
 }
 
-// Fetch all reports
 $reports = $db->query("SELECT r.*, u.name as patient_name, doc.name as doctor_name, patho.name as pathologist_name 
     FROM reports r 
     JOIN users u ON r.patient_id = u.id 
@@ -95,9 +89,9 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   <?php endif; ?>
 
-  <!-- Signing Policy & Terminal Evidence Card -->
+  
   <div class="cards-grid-2" style="margin-bottom: 3rem;">
-    <!-- Policy & Keys -->
+    
     <div class="card-item">
       <h3>Active Document Signing Certificate</h3>
       <p>
@@ -112,7 +106,7 @@ require_once __DIR__ . '/includes/header.php';
       </div>
     </div>
 
-    <!-- Terminal Comparison Box -->
+    
     <div class="terminal-window" style="margin: 0;">
       <div class="terminal-header">
         <div class="terminal-dots">
@@ -135,7 +129,7 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   </div>
 
-  <!-- Clinical Reports Review List -->
+  
   <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 1.25rem;">Clinical Case Queue for Pathologist Authorization</h3>
 
   <div style="display: flex; flex-direction: column; gap: 2rem;">
@@ -164,7 +158,7 @@ require_once __DIR__ . '/includes/header.php';
           </div>
         </div>
 
-        <!-- Structured Test Results Table -->
+        
         <div class="table-responsive" style="margin-bottom: 1.25rem;">
           <table class="data-table" style="background: var(--color-gray-subtle); border-radius: var(--radius-md);">
             <thead>
@@ -205,14 +199,14 @@ require_once __DIR__ . '/includes/header.php';
           </table>
         </div>
 
-        <!-- Summary & Diagnostic Impression -->
+        
         <div style="margin-bottom: 1.25rem; background: var(--color-gray-bg); padding: 0.85rem 1.25rem; border-radius: var(--radius-md); font-size: 0.875rem;">
           <strong>Diagnostic Impression:</strong> <?php echo htmlspecialchars($r['result_summary']); ?>
           <br>
           <span style="font-size: 0.75rem; color: var(--color-gray-mid);">Reference Range Note: <?php echo htmlspecialchars($r['reference_range'] ?: 'Standard intervals applied.'); ?></span>
         </div>
 
-        <!-- Cryptographic Digital Signature Block -->
+        
         <div style="background: #0c0d0e; color: #fff; padding: 1rem 1.25rem; border-radius: var(--radius-md); font-family: var(--font-mono); font-size: 0.75rem; margin-bottom: 1.5rem;">
           <div style="color: #a1a1aa; margin-bottom: 0.35rem;">
             DIGITAL SIGNATURE HASH (SHA-256):
@@ -225,7 +219,7 @@ require_once __DIR__ . '/includes/header.php';
           </div>
         </div>
 
-        <!-- Pathologist Action Controls -->
+        
         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
           <form action="pathologist_studio.php" method="POST" style="margin: 0;">
             <input type="hidden" name="report_id" value="<?php echo $r['id']; ?>">

@@ -1,10 +1,31 @@
-/**
- * Spordha Diagnostics Ltd. - Core Client-Side Interactions
- * Monochromatic UI Scripts & Security Demonstrations
- */
+// Md Shabbir Mia
+function showSpordhaToast(message, isError) {
+  const toast = document.getElementById('spordhaToast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.style.background = isError ? '#991b1b' : '#09090b';
+  toast.style.borderColor = isError ? '#ef4444' : '#27272a';
+  toast.style.display = 'block';
+  clearTimeout(window.__spordhaToastTimer);
+  window.__spordhaToastTimer = setTimeout(function () {
+    toast.style.display = 'none';
+  }, 3500);
+}
+
+function activateTabById(tabId) {
+  const btn = document.querySelector('.tab-btn[data-tab="' + tabId + '"]');
+  if (!btn) return;
+  const tabGroup = btn.closest('.tab-container') || document;
+  tabGroup.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  tabGroup.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const targetPane = tabGroup.querySelector('#' + tabId);
+  if (targetPane) {
+    targetPane.classList.add('active');
+  }
+}
 
 document.addEventListener('DOMContentLoaded', function () {
-  // 1. Mobile Menu Toggle
   const mobileToggle = document.querySelector('.mobile-toggle');
   const navLinks = document.querySelector('.nav-links');
 
@@ -26,25 +47,33 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 2. Interactive Tabs System (PKI SOC, Documentation, Portals)
   const tabButtons = document.querySelectorAll('.tab-btn');
   tabButtons.forEach(btn => {
     btn.addEventListener('click', function () {
       const targetId = this.getAttribute('data-tab');
-      const tabGroup = this.closest('.tab-container') || document;
-
-      tabGroup.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      tabGroup.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-
-      this.classList.add('active');
-      const targetPane = tabGroup.querySelector('#' + targetId);
-      if (targetPane) {
-        targetPane.classList.add('active');
-      }
+      activateTabById(targetId);
     });
   });
 
-  // 3. Modals
+  const hashTabMap = {
+    '#ca_tree': 'tab-ca-tree',
+    '#tab-ca-tree': 'tab-ca-tree',
+    '#tab-inventory': 'tab-inventory',
+    '#expiry_sec': 'tab-expiry',
+    '#tab-expiry': 'tab-expiry',
+    '#incident_sec': 'tab-ai-threat',
+    '#tab-ai-threat': 'tab-ai-threat',
+    '#tab-test-matrix': 'tab-test-matrix'
+  };
+  if (window.location.hash && hashTabMap[window.location.hash]) {
+    activateTabById(hashTabMap[window.location.hash]);
+  }
+  window.addEventListener('hashchange', function () {
+    if (window.location.hash && hashTabMap[window.location.hash]) {
+      activateTabById(hashTabMap[window.location.hash]);
+    }
+  });
+
   const modalOpeners = document.querySelectorAll('[data-modal-target]');
   modalOpeners.forEach(btn => {
     btn.addEventListener('click', function () {
@@ -68,24 +97,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // 4. Copy to Clipboard Utility
   const copyButtons = document.querySelectorAll('.copy-btn');
   copyButtons.forEach(btn => {
     btn.addEventListener('click', function () {
       const targetText = this.getAttribute('data-copy') || this.innerText;
-      navigator.clipboard.writeText(targetText).then(() => {
-        const originalText = this.innerHTML;
-        this.innerHTML = '✓ Copied';
-        this.classList.add('btn-copied');
-        setTimeout(() => {
-          this.innerHTML = originalText;
-          this.classList.remove('btn-copied');
-        }, 2000);
-      });
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(targetText).then(() => {
+          const originalText = this.innerHTML;
+          this.innerHTML = '✓ Copied';
+          this.classList.add('btn-copied');
+          setTimeout(() => {
+            this.innerHTML = originalText;
+            this.classList.remove('btn-copied');
+          }, 2000);
+        });
+      }
     });
   });
 
-  // 5. Live Table Filtering
   const filterInputs = document.querySelectorAll('.table-search-input');
   filterInputs.forEach(input => {
     input.addEventListener('keyup', function () {
@@ -101,7 +130,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // 6. Back-to-top button
   const backToTop = document.querySelector('.back-to-top');
   if (backToTop) {
     window.addEventListener('scroll', function () {
@@ -116,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 7. Documentation scroll-spy (highlight active TOC link)
   const tocLinks = document.querySelectorAll('.doc-nav-link[href^="#"]');
   if (tocLinks.length > 0) {
     const sections = [];
@@ -143,7 +170,6 @@ document.addEventListener('DOMContentLoaded', function () {
     onScroll();
   }
 
-  // 8. Animated stat counters
   const counters = document.querySelectorAll('[data-count]');
   counters.forEach(el => {
     const target = parseInt(el.getAttribute('data-count'), 10) || 0;
@@ -160,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(step);
   });
 
-  // 9. Scroll-reveal animation
   const revealEls = document.querySelectorAll('.reveal');
   if (revealEls.length > 0) {
     if ('IntersectionObserver' in window) {
@@ -179,16 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-/**
- * Live Certificate Revocation AJAX Handler
- * @param {number} certId 
- * @param {string} action 'revoke' | 'reinstate'
- */
 function toggleCertRevocation(certId, action) {
-  if (!confirm(`Are you sure you want to ${action.toUpperCase()} this certificate in the Spordha CA Directory? This immediately updates the CRL and OCSP responder status.`)) {
-    return;
-  }
-
   fetch('api/revoke_cert.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -197,20 +213,19 @@ function toggleCertRevocation(certId, action) {
   .then(res => res.json())
   .then(data => {
     if (data.success) {
-      alert(`Success: ${data.message}`);
-      window.location.reload();
+      showSpordhaToast(data.message, false);
+      setTimeout(function () {
+        window.location.reload();
+      }, 650);
     } else {
-      alert(`Error: ${data.message}`);
+      showSpordhaToast(data.message || 'Revocation request failed.', true);
     }
   })
   .catch(err => {
-    alert('Network error connecting to PKI Directory: ' + err);
+    showSpordhaToast('Network error connecting to PKI Directory: ' + err, true);
   });
 }
 
-/**
- * Fill Report Search in Hero from Sample Code Pill
- */
 function setVerifyQuery(code) {
   const input = document.getElementById('reportSearchInput');
   if (input) {
