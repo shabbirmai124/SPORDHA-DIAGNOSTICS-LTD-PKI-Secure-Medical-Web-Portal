@@ -3,7 +3,7 @@
 **Course:** CSE487 Cyber Security, Ethics and Law (Fall 2026)  
 **Institution:** East West University, Department of Computer Science & Engineering  
 **Case Identity:** Spordha Diagnostics Ltd. (Central Laboratory in Dhaka & 3 Branches: Dhanmondi, Uttara, Mirpur)  
-**Developer:** Md Shabbir Mia (ID: 2022-2-60-150)  
+**Developer:** Md Shabbir Mia  
 **Supervision:** Department of CSE, East West University  
 markdown
 # Spordha Diagnostics Ltd. — Enterprise PKI & Secure Medical Web Portal
@@ -600,8 +600,7 @@ Then navigate to `http://127.0.0.1:8080` in your web browser.
 
 - **Course:** CSE487 Cyber Security, Ethics and Law
 - **Institution:** East West University, Dhaka, Bangladesh
-- **Academic Term:** Fall 2026
-- **Developer:** Md Shabbir Mia (ID: 2022-2-60-048)
+
 - **Special Thanks:** Course faculty and the Department of Computer Science & Engineering, East West University.
 
 ---
